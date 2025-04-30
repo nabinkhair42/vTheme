@@ -80,8 +80,8 @@ For the best experience with V Theme, consider these settings:
 
 Your feedback helps improve V Theme! If you have suggestions or encounter issues:
 
-- [Submit an issue](https://github.com/nabinkhair/vtheme/issues)
-- [Make a pull request](https://github.com/nabinkhair/vtheme/pulls)
+- [Submit an issue](https://github.com/nabinkhair42/vtheme/issues)
+- [Make a pull request](https://github.com/nabinkhair42/vtheme/pulls)
 
 ## License
 
