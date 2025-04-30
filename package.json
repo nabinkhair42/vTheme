@@ -1,11 +1,11 @@
 {
   "name": "vtheme",
   "displayName": "V Theme",
-  "description": "A professionally crafted dark color theme based on color theory principles",
+  "description": "A professionally crafted theme with both dark and light variants based on color theory principles",
   "version": "0.0.1",
   "publisher": "vtheme",
   "author": {
-    "name": "vTheme"
+    "name": "nabinkhair42"
   },
   "engines": {
     "vscode": "^1.60.0"
@@ -16,13 +16,13 @@
   "keywords": [
     "theme",
     "dark theme",
-    "triadic",
+    "light theme",
     "color theory",
     "professional"
   ],
   "icon": "images/icon.png",
   "galleryBanner": {
-    "color": "#2E2A4D",
+    "color": "#212836",
     "theme": "dark"
   },
   "repository": {
@@ -35,6 +35,11 @@
         "label": "V Theme",
         "uiTheme": "vs-dark",
         "path": "./themes/V Theme-color-theme.json"
+      },
+      {
+        "label": "V Theme Light",
+        "uiTheme": "vs",
+        "path": "./themes/V Theme Light-color-theme.json"
       }
     ]
   }

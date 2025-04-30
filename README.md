@@ -1,38 +1,54 @@
 # V Theme
 
-A professionally crafted dark color theme for Visual Studio Code based on color theory principles.
+A professionally crafted theme for Visual Studio Code with both dark and light variants based on color theory principles.
 
-![V Theme Preview](/images/preview.png)
+![V Theme Preview](/images/preview-dark.png)
+
+## Available Themes
+
+V Theme comes in two variants to suit your preference and environment:
+
+- **V Theme** - A refined dark theme with deep blue-gray tones
+- **V Theme Light** - A clean and crisp light theme with complementary colors
+
+Switch between them easily via the theme selector (Ctrl+K Ctrl+T).
 
 ## Color Theory Behind the Design
 
 V Theme is meticulously designed using advanced color theory principles to create a visually pleasing, harmonious, and productive coding environment.
 
-### Triadic Color Scheme
+### Dark Theme: Modern Blue-Gray Harmony
 
-The theme is built around a **triadic color palette** - three colors equidistant on the color wheel that provide both harmony and vibrant contrast:
+The dark theme features a clean, modern color palette:
 
-- **Deep Blue-Purple (#2E2A4D)** - Primary background color that's easy on the eyes during long coding sessions
-- **Vibrant Orange-Gold (#F7B32B)** - Accent color for highlighting active elements
-- **Teal (#34B0A5)** - Accent color for functions and special elements
+- **Deep Blue-Gray (#212836)** - Primary background color that's easy on the eyes
+- **Teal Accent (#64FFDA)** - Primary accent for highlighting important elements
+- **Complementary Accents** - Carefully selected colors for syntax highlighting
 
-This balanced approach creates visual interest while maintaining color harmony.
+### Light Theme: Clean and Refreshing
+
+The light theme maintains a professional appearance with:
+
+- **Soft Blue-White (#F5F8FA)** - Gentle background that reduces eye strain
+- **Teal Accent (#00A3A3)** - Primary accent that provides continuity with the dark theme
+- **Balanced Contrast** - Careful color selection for readability in bright environments
 
 ### Strategic Color Psychology
 
 Colors were carefully selected based on their psychological impact:
 
-- **Blue-Purple tones** - Promotes concentration, creativity, and focus
-- **Gold accents** - Provides energy and optimism to break the monotony
-- **Teal highlights** - Creates a sense of clarity and balance
+- **Blue tones** - Promote concentration, creativity, and focus
+- **Teal accents** - Create a sense of clarity and balance
+- **Proper contrast** - Ensures readability without causing eye fatigue
 
 ### Accessibility & Readability
 
-The theme maintains excellent contrast ratios between text and backgrounds, following accessibility best practices to ensure readability during long coding sessions. Comments are subtly distinguished without sacrificing legibility.
+Both themes maintain excellent contrast ratios between text and backgrounds, following accessibility best practices to ensure readability during long coding sessions. Comments are subtly distinguished without sacrificing legibility.
 
 ## Features
 
-- Carefully designed triadic color palette
+- Two complementary themes: dark and light
+- Carefully designed color palettes based on color theory
 - Optimized syntax highlighting for popular languages
 - Enhanced UI elements for a cohesive experience
 - Proper semantic color associations (errors, warnings, successes)
@@ -58,7 +74,7 @@ For the best experience with V Theme, consider these settings:
 2. Search for `V Theme`
 3. Click **Install**
 4. Open the **Command Palette** with `Ctrl+Shift+P` or `⇧⌘P`
-5. Select **Preferences: Color Theme** and choose **V Theme**
+5. Select **Preferences: Color Theme** and choose either **V Theme** or **V Theme Light**
 
 ## Feedback & Contributions
 
@@ -69,6 +85,6 @@ Your feedback helps improve V Theme! If you have suggestions or encounter issues
 
 ## License
 
-This theme is released under the [MIT License](LICENSE).
+This theme is released under the [MIT License](LICENSE.md).
 
 **Enjoy coding with color theory!**
