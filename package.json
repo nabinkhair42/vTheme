@@ -3,12 +3,12 @@
   "displayName": "V Theme",
   "description": "A professionally crafted theme with both dark and light variants based on color theory principles",
   "version": "0.0.1",
-  "publisher": "vtheme",
+  "publisher": "nabinkhair",
   "author": {
-    "name": "nabinkhair42"
+    "name": "nabinkhair"
   },
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.50.0"
   },
   "categories": [
     "Themes"
@@ -27,16 +27,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nabinkhair42/vtheme"
+    "url": "https://github.com/nabinkhair/vtheme"
   },
+  "license": "MIT",
+  "main": "",
+  "browser": "",
+  "bugs": {
+    "url": "https://github.com/nabinkhair/vtheme/issues"
+  },
+  "homepage": "https://github.com/nabinkhair/vtheme#readme",
   "contributes": {
     "themes": [
       {
-        "label": "V Theme",
+        "id": "v-theme-dark",
+        "label": "V Theme Dark",
         "uiTheme": "vs-dark",
         "path": "./themes/V Theme-color-theme.json"
       },
       {
+        "id": "v-theme-light",
         "label": "V Theme Light",
         "uiTheme": "vs",
         "path": "./themes/V Theme Light-color-theme.json"

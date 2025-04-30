@@ -8,7 +8,7 @@ A professionally crafted theme for Visual Studio Code with both dark and light v
 
 V Theme comes in two variants to suit your preference and environment:
 
-- **V Theme** - A refined dark theme with deep blue-gray tones
+- **V Theme Dark** - A refined dark theme with deep blue-gray tones
 - **V Theme Light** - A clean and crisp light theme with complementary colors
 
 Switch between them easily via the theme selector (Ctrl+K Ctrl+T).
@@ -80,8 +80,8 @@ For the best experience with V Theme, consider these settings:
 
 Your feedback helps improve V Theme! If you have suggestions or encounter issues:
 
-- [Submit an issue](https://github.com/nabinkhair42/vtheme/issues)
-- [Make a pull request](https://github.com/nabinkhair42/vtheme/pulls)
+- [Submit an issue](https://github.com/nabinkhair/vtheme/issues)
+- [Make a pull request](https://github.com/nabinkhair/vtheme/pulls)
 
 ## License
 
