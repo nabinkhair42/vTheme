@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="128" height="128" rx="14" fill="#2E2A4D"/>
+  
+  <!-- Letter V stylized -->
+  <path d="M64 20 L92 108 L76 108 L64 72 L52 108 L36 108 L64 20Z" fill="#F7B32B"/>
+  
+  <!-- Accent elements -->
+  <circle cx="64" cy="41" r="8" fill="#34B0A5"/>
+</svg>
