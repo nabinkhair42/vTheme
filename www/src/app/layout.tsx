@@ -16,7 +16,35 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "V Theme - Beautiful VS Code Theme",
-  description: "A professionally crafted VS Code theme based on color theory principles to reduce eye strain and enhance code readability",
+  description:
+    "A professionally crafted VS Code theme based on color theory principles to reduce eye strain and enhance code readability",
+  // add url and author
+  authors: [
+    {
+      name: "Nabin Khair",
+      url: "https://nabinkhair.com.np",
+    },
+  ],
+  keywords: [
+    "VS Code",
+    "Theme",
+    "Dark Theme",
+    "Light Theme",
+    "Nabin Khair",
+    "V Theme",
+    "Code Editor",
+    "Programming",
+  ],
+
+  openGraph: {
+    images: [
+      {
+        url: "https://vthemes.nabinkhair.com.np/preview-dark.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
