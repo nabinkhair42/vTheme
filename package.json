@@ -51,5 +51,8 @@
         "path": "./themes/V Theme Light-color-theme.json"
       }
     ]
+  },
+  "dependencies": {
+    "react-icons": "^5.5.0"
   }
 }

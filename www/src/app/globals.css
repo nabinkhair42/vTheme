@@ -1,0 +1,342 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* V Theme color palette - accurately matched to theme JSON files */
+:root {
+  /* Light Mode Colors - From V Theme Light-color-theme.json */
+  --background: #F5F8FA;
+  --foreground: #2D3748;
+  --card: #FFFFFF;
+  --card-foreground: #2D3748;
+  --popover: #FFFFFF;
+  --popover-foreground: #2D3748;
+  --primary: #00A3A3;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5F8FA;
+  --secondary-foreground: #2D3748;
+  --muted: #E9EFF5;
+  --muted-foreground: #718096;
+  --accent: #00A3A3;
+  --accent-foreground: #F5F8FA;
+  --destructive: #DC2626;
+  --destructive-foreground: #F5F8FA;
+  --border: #E9EFF5;
+  --input: #E9EFF5;
+  --ring: #00A3A3;
+
+  /* Syntax highlighting colors - Light - Matched to theme file */
+  --syntax-string: #16A349;
+  --syntax-number: #E03E3E;
+  --syntax-keyword: #A31DB1;
+  --syntax-function: #00A3A3;
+  --syntax-comment: #718096;
+  --syntax-tag: #B45309;
+  --syntax-type: #0072C6;
+  --syntax-operator: #0072C6;
+
+  /* VS Code UI Elements - Light Theme */
+  --radius: 0.5rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #2D3748;
+  --sidebar-border: #E9EFF5;
+  --sidebar-accent: #F5F8FA;
+  --sidebar-accent-foreground: #2D3748;
+  
+  /* Editor-specific UI elements from theme file */
+  --selection-background: #C9E3F5;
+  --line-highlight: #E9EFF5;
+  --active-tab: #F5F8FA;
+  --inactive-tab: #FFFFFF;
+  --tab-border: #00A3A3;
+  --activity-bar: #FFFFFF;
+  --activity-bar-foreground: #2D3748;
+  --activity-bar-inactive: #718096;
+  --activity-bar-badge: #00A3A3;
+  --activity-bar-badge-foreground: #FFFFFF;
+  --status-bar: #FFFFFF;
+  --status-bar-foreground: #2D3748;
+}
+
+.dark {
+  /* Dark Mode Colors - From V Theme-color-theme.json */
+  --background: #212836;
+  --foreground: #E9ECEF;
+  --card: #1A212E;
+  --card-foreground: #E9ECEF;
+  --popover: #1A212E;
+  --popover-foreground: #E9ECEF;
+  --primary: #64FFDA;
+  --primary-foreground: #1A212E;
+  --secondary: #2B3647;
+  --secondary-foreground: #E9ECEF;
+  --muted: #2B3647;
+  --muted-foreground: #8695A8;
+  --accent: #64FFDA;
+  --accent-foreground: #1A212E;
+  --destructive: #FF5555;
+  --destructive-foreground: #1A212E;
+  --border: #2B3647;
+  --input: #2B3647;
+  --ring: #64FFDA;
+
+  /* Syntax highlighting colors - Dark - Matched to theme file */
+  --syntax-string: #5CFF87;
+  --syntax-number: #FF8A8A;
+  --syntax-keyword: #FF79C6;
+  --syntax-function: #64FFDA;
+  --syntax-comment: #8695A8;
+  --syntax-tag: #FFCB6B;
+  --syntax-type: #82AAFF;
+  --syntax-operator: #82AAFF;
+
+  /* VS Code UI Elements - Dark Theme */
+  --sidebar: #1A212E;
+  --sidebar-foreground: #E9ECEF;
+  --sidebar-border: #2B3647;
+  --sidebar-accent: #2B3647;
+  --sidebar-accent-foreground: #E9ECEF;
+  
+  /* Editor-specific UI elements from theme file */
+  --selection-background: #3A506B;
+  --line-highlight: #2B3647;
+  --active-tab: #212836;
+  --inactive-tab: #1A212E;
+  --tab-border: #64FFDA;
+  --activity-bar: #1A212E;
+  --activity-bar-foreground: #E9ECEF;
+  --activity-bar-inactive: #8695A8;
+  --activity-bar-badge: #64FFDA;
+  --activity-bar-badge-foreground: #1A212E;
+  --status-bar: #151C28;
+  --status-bar-foreground: #E9ECEF;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+
+  /* Syntax highlighting colors */
+  --color-syntax-string: var(--syntax-string);
+  --color-syntax-number: var(--syntax-number);
+  --color-syntax-keyword: var(--syntax-keyword);
+  --color-syntax-function: var(--syntax-function);
+  --color-syntax-comment: var(--syntax-comment);
+  --color-syntax-tag: var(--syntax-tag);
+  --color-syntax-type: var(--syntax-type);
+  --color-syntax-operator: var(--syntax-operator);
+  
+  /* Editor elements */
+  --color-selection-background: var(--selection-background);
+  --color-line-highlight: var(--line-highlight);
+  --color-active-tab: var(--active-tab);
+  --color-inactive-tab: var(--inactive-tab);
+  --color-tab-border: var(--tab-border);
+  --color-activity-bar: var(--activity-bar);
+  --color-activity-bar-foreground: var(--activity-bar-foreground);
+  --color-activity-bar-inactive: var(--activity-bar-inactive);
+  --color-activity-bar-badge: var(--activity-bar-badge);
+  --color-activity-bar-badge-foreground: var(--activity-bar-badge-foreground);
+  --color-status-bar: var(--status-bar);
+  --color-status-bar-foreground: var(--status-bar-foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* VS Code scrollbar styling - matched to theme scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary/30;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/40 rounded-full transition-colors hover:bg-muted-foreground/60;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* VS Code focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary/50;
+  }
+
+  /* Code blocks with syntax highlighting */
+  pre,
+  code {
+    @apply font-mono text-sm;
+  }
+
+  pre {
+    @apply rounded-lg p-4 overflow-x-auto;
+  }
+}
+
+/* VS Code-like UI elements */
+.vscode-editor {
+  @apply border border-border rounded-lg overflow-hidden shadow-md flex flex-col;
+  background-color: var(--background);
+}
+
+.vscode-tab-bar {
+  @apply flex items-center border-b border-border h-9;
+  background-color: var(--inactive-tab);
+}
+
+.vscode-tab {
+  @apply px-4 py-2 flex items-center h-full border-r border-border relative;
+  background-color: var(--active-tab);
+}
+
+.vscode-tab::after {
+  content: '';
+  @apply absolute bottom-0 left-0 right-0 h-0.5;
+  background-color: var(--primary);
+}
+
+.vscode-line-numbers {
+  @apply py-1.5 pr-2 text-right select-none text-muted-foreground;
+  background-color: var(--background);
+}
+
+.vscode-line-highlight {
+  background-color: var(--line-highlight);
+}
+
+.vscode-status-bar {
+  @apply flex items-center justify-between py-1 px-3 text-xs;
+  background-color: var(--status-bar);
+  color: var(--status-bar-foreground);
+}
+
+/* Section divider */
+.section-divider {
+  @apply w-full h-px my-12;
+  background: linear-gradient(to right, transparent, var(--primary)/50, transparent);
+}
+
+/* Mobile adaptations for VS Code layout */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    @apply hidden;
+  }
+  
+  .mobile-sidebar-open {
+    @apply fixed inset-0 z-50 bg-background/80 backdrop-blur-sm;
+  }
+  
+  .mobile-sidebar {
+    @apply absolute top-0 left-0 h-full w-72 border-r border-border shadow-lg;
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+}
+
+/* Token colorization for syntax highlighting based on V Theme */
+.token.keyword { color: var(--syntax-keyword); }
+.token.string { color: var(--syntax-string); }
+.token.number { color: var(--syntax-number); }
+.token.function { color: var(--syntax-function); }
+.token.comment { 
+  color: var(--syntax-comment); 
+  font-style: italic;
+}
+.token.tag { color: var(--syntax-tag); }
+.token.operator { color: var(--syntax-operator); }
+.token.type { color: var(--syntax-type); }
+
+/* VS Code-inspired UI components */
+.vs-button {
+  @apply px-3 py-1.5 text-sm rounded flex items-center gap-1.5 transition-colors;
+}
+
+.vs-button-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  @apply hover:bg-primary/90;
+}
+
+.vs-button-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  @apply hover:bg-secondary/90;
+}
+
+.vs-badge {
+  @apply px-1.5 py-0.5 text-xs rounded-full;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.vs-input {
+  @apply px-3 py-1.5 text-sm rounded border border-border bg-input text-foreground w-full;
+}
+
+.vs-panel {
+  @apply p-4 rounded-lg border border-border bg-card text-card-foreground;
+}
+
+/* VS Code Terminal styling */
+.vs-terminal {
+  @apply font-mono text-sm p-4 rounded-lg overflow-hidden;
+  background-color: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+}
+
+.vs-terminal-header {
+  @apply flex items-center justify-between mb-2 pb-2 border-b border-border;
+}
+
+.vs-terminal-body {
+  @apply whitespace-pre-wrap break-words;
+}
