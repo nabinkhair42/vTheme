@@ -285,7 +285,7 @@ export function HeroSection() {
                 </div>
 
                 {/* Theme preview content */}
-                <div className="aspect-video transition-all">
+                <div className="aspect-video transition-all rounded-xl">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={isLightTheme ? "light" : "dark"}
@@ -293,7 +293,7 @@ export function HeroSection() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute inset-0"
+                      className="absolute inset-0 rounded-xl"
                     >
                       <Image
                         src={
@@ -305,7 +305,7 @@ export function HeroSection() {
                           isLightTheme ? "Light" : "Dark"
                         } Preview`}
                         fill
-                        className="object-cover"
+                        className="object-cover rounded-xl"
                         priority
                       />
                     </motion.div>
@@ -314,7 +314,7 @@ export function HeroSection() {
 
                 {/* Overlay with gradient when hovered */}
                 <motion.div
-                  className="absolute inset-0 pointer-events-none opacity-0"
+                  className="absolute inset-0 pointer-events-none opacity-0 rounded-xl"
                   animate={{ opacity: isHovered ? 0.05 : 0 }}
                   style={gradientOverlayStyle}
                 ></motion.div>

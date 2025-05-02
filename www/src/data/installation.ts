@@ -1,5 +1,5 @@
 // Installation tabs data
-export type InstallationMethod = "marketplace" | "cli" | "extension";
+export type InstallationMethod = "marketplace" | "cli" | "extension" | "vsix";
 
 export const installationTabs = [
   {
@@ -17,12 +17,18 @@ export const installationTabs = [
     label: "Extension Panel",
     icon: "Code2",
   },
+  {
+    id: "vsix" as const,
+    label: "Direct Download",
+    icon: "Download",
+  },
 ];
 
 // Installation commands
 export const installationCommands = {
   cli: "code --install-extension nabinkhair.vtheme",
   extension: "ext install nabinkhair.vtheme",
+  vsix: "code --install-extension vtheme-0.0.1.vsix"
 };
 
 // Installation steps for each method
@@ -79,6 +85,37 @@ export const installationSteps = {
       description: "Press Ctrl+K Ctrl+T and select V Theme",
     },
   ],
+  vsix: [
+    {
+      title: "Download VSIX File",
+      description: "Download the V Theme VSIX package directly from our website",
+    },
+    {
+      title: "Open VS Code",
+      description: "Launch Visual Studio Code on your computer",
+    },
+    {
+      title: "Install from VSIX",
+      description: "Go to Extensions view, click '...' menu, and select 'Install from VSIX'",
+    },
+    {
+      title: "Select and Install",
+      description: "Browse to the downloaded VSIX file and select it to install",
+    },
+    {
+      title: "Apply the Theme",
+      description: "Press Ctrl+K Ctrl+T and select V Theme from the list",
+    },
+  ],
+};
+
+// VSIX file data
+export const vsixData = {
+  fileName: "vtheme-0.0.1.vsix",
+  fileSize: "154 KB",
+  version: "0.0.1",
+  downloadPath: "/vtheme-0.0.1.vsix",
+  lastUpdated: "May 2025",
 };
 
 // Marketplace mock data

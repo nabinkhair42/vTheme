@@ -1,9 +1,12 @@
 import type { LucideIcon } from 'lucide-react';
 
+// Define available icon names for better type checking
+export type IconName = 'Palette' | 'Paintbrush' | 'Brain' | 'Eye' | 'LayoutPanelLeft' | 'Lightbulb';
+
 export interface ColorTheoryPrinciple {
   id: string;
   title: string;
-  iconName: string; // Store icon name instead of the component
+  iconName: IconName; // Use the new type for better type checking
   theory: string;
   effect: string;
   exampleTemplate: string; // Use a template string

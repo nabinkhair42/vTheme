@@ -15,6 +15,8 @@ import {
   FileJson,
   Palette,
   Star,
+  Package,
+  CircleCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
@@ -25,6 +27,7 @@ import {
   installationSteps,
   marketplaceData,
   sectionData,
+  vsixData,
 } from "@/data/installation";
 
 export function InstallationSection() {
@@ -631,6 +634,112 @@ export function InstallationSection() {
                       )}
                     </Button>
                   </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* VSIX Download Method */}
+          {activeTab === "vsix" && (
+            <motion.div
+              className="w-full max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+                {/* Left side - VSIX file details */}
+                <div className="lg:col-span-3 order-2 lg:order-1">
+                  <div className="rounded-lg border border-border overflow-hidden shadow-xl">
+                    {/* VSIX package header */}
+                    <div
+                      className={`h-8 flex items-center px-3 ${
+                        theme === "light" ? "bg-[#f0f0f0]" : "bg-[#252526]"
+                      } border-b border-border`}
+                    >
+                      <div className="flex space-x-2 mr-4">
+                        <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        V Theme Extension Package
+                      </div>
+                    </div>
+
+                    {/* VSIX content */}
+                    <div
+                      className={`${
+                        theme === "light" ? "bg-[#f9f9f9]" : "bg-[#1e1e1e]"
+                      } p-8 flex flex-col items-center justify-center h-80`}
+                    >
+                      <div className="mb-6">
+                        <Package className="h-20 w-20 text-primary/60" />
+                      </div>
+                      
+                      <div className="text-center">
+                        <h3 className="text-xl font-medium mb-2">{vsixData.fileName}</h3>
+                        <div className="mb-4 flex flex-col gap-1 text-sm text-muted-foreground">
+                          <p>Size: {vsixData.fileSize}</p>
+                          <p>Version: {vsixData.version}</p>
+                          <p>Last Updated: {vsixData.lastUpdated}</p>
+                        </div>
+                        
+                        <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2">
+                          <a href={vsixData.downloadPath} download>
+                            <Download className="h-4 w-4" />
+                            Download VSIX Package
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right side - Steps */}
+                <div className="lg:col-span-2 order-1 lg:order-2">
+                  <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <Download className="h-5 w-5 text-primary" />
+                    <span>Manual Installation</span>
+                  </h3>
+
+                  <ol className="space-y-6">
+                    {installationSteps.vsix.map((step, index) => (
+                      <li key={index} className="flex gap-4">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <h4 className="font-medium">{step.title}</h4>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {step.description}
+                          </p>
+
+                          {step.title === "Download VSIX File" && (
+                            <div className="mt-3">
+                              <Button asChild size="sm" variant="outline" className="flex items-center gap-2">
+                                <a href={vsixData.downloadPath} download>
+                                  <Download className="h-3.5 w-3.5" />
+                                  Download vtheme-0.0.1.vsix
+                                </a>
+                              </Button>
+                            </div>
+                          )}
+
+                          {step.title === "Install from VSIX" && (
+                            <p className="text-xs text-muted-foreground mt-1 italic">
+                              Tip: You can also install by running{" "}
+                              <code className="text-primary font-mono">
+                                {installationCommands.vsix}
+                              </code>{" "}
+                              in the terminal
+                            </p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
               </div>
             </motion.div>

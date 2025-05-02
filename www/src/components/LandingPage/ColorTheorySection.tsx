@@ -11,19 +11,24 @@ import {
   Eye,
   Brain,
   LayoutPanelLeft,
-  // ChevronRight, // Not used anymore? Keep if needed elsewhere
   Plus,
   Minus,
   LucideIcon,
-  ChevronRight, // Import LucideIcon type
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { darkThemeColors, lightThemeColors } from "@/data/colorPaletteData";
-import { colorTheoryPrinciplesData } from "@/data/colorTheory"; // Import the data
+import { colorTheoryPrinciplesData, IconName } from "@/data/colorTheory";
+import { pageAnimations } from "@/lib/animations";
+import { getThemeColors, getColorValue, processExampleTemplate } from "@/lib/colorUtils";
+import { 
+  getColorTheoryIllustration, 
+  AnalogousColorHarmony, 
+  ContrastReadability 
+} from "./ColorTheoryIllustrations";
 
 // Map icon names to actual components
-const iconComponents: Record<string, LucideIcon> = {
+const iconComponents: Record<IconName, LucideIcon> = {
   Paintbrush,
   Lightbulb,
   Palette,
@@ -35,89 +40,30 @@ const iconComponents: Record<string, LucideIcon> = {
 export function ColorTheorySection() {
   const { theme } = useTheme();
   const currentTheme = theme === "light" ? "light" : "dark";
-  const [expandedTheory, setExpandedTheory] = useState<string | null>(
-    "analogous"
-  );
+  const [expandedTheory, setExpandedTheory] = useState<string | null>("analogous");
 
-  // Get theme colors based on current theme
-  const colorData =
-    currentTheme === "light" ? lightThemeColors : darkThemeColors;
-
-  // Background color from theme data
-  const bgColor =
-    colorData.primary.find((c) => c.name === "Background")?.hexCode ||
-    (currentTheme === "light" ? "#F5F8FA" : "#212836");
-
-  // Primary accent color
-  const primaryColor =
-    colorData.primary.find((c) => c.name === "Primary")?.hexCode ||
-    (currentTheme === "light" ? "#00A3A3" : "#64FFDA");
-
-  // Secondary accent color
-  const secondaryColor =
-    colorData.primary.find((c) => c.name === "Secondary")?.hexCode ||
-    (currentTheme === "light" ? "#0072C6" : "#82AAFF");
-
-  // Text color
-  const textColor =
-    colorData.primary.find((c) => c.name === "Foreground")?.hexCode ||
-    (currentTheme === "light" ? "#2D3748" : "#E9ECEF");
-
-  // Syntax highlight colors
-  const syntaxColors = {
-    keyword: currentTheme === "light" ? "#A31DB1" : "#FF79C6", // Pink/Purple
-    string: currentTheme === "light" ? "#16A349" : "#5CFF87", // Green
-    number: currentTheme === "light" ? "#E03E3E" : "#FF8A8A", // Red
-    function: currentTheme === "light" ? "#00A3A3" : "#64FFDA", // Teal/Cyan
-    comment: currentTheme === "light" ? "#718096" : "#8695A8", // Gray
-    variable: currentTheme === "light" ? "#2D3748" : "#E9ECEF", // Text color
-    type: currentTheme === "light" ? "#B45309" : "#FFCB6B", // Yellow/Orange
-    operator: currentTheme === "light" ? "#0072C6" : "#82AAFF", // Blue
-  };
-
-  // Helper to get color value by key (handles nested syntax colors)
-  const getColorValue = (key: string): string => {
-    if (key.startsWith("syntax.")) {
-      const syntaxKey = key.split(".")[1] as keyof typeof syntaxColors;
-      return syntaxColors[syntaxKey];
-    }
-    switch (key) {
-      case "bgColor":
-        return bgColor;
-      case "primaryColor":
-        return primaryColor;
-      case "secondaryColor":
-        return secondaryColor;
-      case "textColor":
-        return textColor;
-      default:
-        return "#000000"; // Fallback
-    }
-  };
+  // Get theme colors using our utility function
+  const colorData = currentTheme === "light" ? lightThemeColors : darkThemeColors;
+  const themeColors = getThemeColors(currentTheme, colorData);
+  
+  // Destructure colors for easier access
+  const { bgColor, primaryColor, secondaryColor, textColor, syntax } = themeColors;
 
   // Process the imported data to create the final array for rendering
   const processedColorTheoryPrinciples = colorTheoryPrinciplesData.map(
     (principle) => {
       const IconComponent = iconComponents[principle.iconName];
-      const example = principle.exampleTemplate
-        .replace("{bgColor}", bgColor)
-        .replace("{primaryColor}", primaryColor)
-        .replace("{secondaryColor}", secondaryColor)
-        .replace("{textColor}", textColor); // Add more replacements if needed
-
-      const colors = principle.colorKeys.map(getColorValue);
+      const example = processExampleTemplate(principle.exampleTemplate, themeColors);
+      const colors = principle.colorKeys.map(key => getColorValue(key, themeColors));
 
       return {
         ...principle,
-        icon: <IconComponent className="h-5 w-5" />, // Get the actual icon component
-        example, // Use the processed example string
-        colors, // Use the dynamically fetched colors
+        icon: <IconComponent className="h-5 w-5" />,
+        example,
+        colors,
       };
     }
   );
-
-  // Define color theory principles with descriptions matching the requirements
-  // REMOVED: const colorTheoryPrinciples = [ ... ];
 
   // Toggle expanding a theory card
   const toggleExpand = (theoryId: string) => {
@@ -128,172 +74,12 @@ export function ColorTheorySection() {
     }
   };
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring", stiffness: 100 },
-    },
-  };
-
-  // Render color wheel illustration
-  const renderColorWheel = (type: string) => {
-    switch (type) {
-      case "analogous-wheel":
-        return (
-          <div className="relative w-24 h-24 mx-auto my-4">
-            <div className="absolute inset-0 rounded-full border border-border flex items-center justify-center overflow-hidden">
-              <div
-                className="absolute w-full h-full bg-gradient-to-r from-[var(--bg-color)] via-[var(--primary-color)] to-[var(--secondary-color)] opacity-70"
-                style={
-                  {
-                    "--bg-color": bgColor,
-                    "--primary-color": primaryColor,
-                    "--secondary-color": secondaryColor,
-                  } as any
-                }
-              ></div>
-              <div className="relative z-10 bg-background/20 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
-                <span className="text-xs font-medium">Analogous</span>
-              </div>
-            </div>
-          </div>
-        );
-      case "hsv-model":
-        return (
-          <div className="grid grid-cols-3 gap-2 my-4">
-            <div className="flex flex-col items-center">
-              <div className="w-full h-8 rounded bg-gradient-to-r from-[#FF0000] via-[#00FF00] to-[#0000FF]"></div>
-              <span className="text-xs mt-1">Hue</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div
-                className="w-full h-8 rounded bg-gradient-to-r"
-                style={{
-                  backgroundImage: `linear-gradient(to right, ${primaryColor}20, ${primaryColor})`,
-                }}
-              ></div>
-              <span className="text-xs mt-1">Saturation</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-full h-8 rounded bg-gradient-to-r from-[#000000] to-[#FFFFFF]"></div>
-              <span className="text-xs mt-1">Value</span>
-            </div>
-          </div>
-        );
-      case "cool-colors":
-        return (
-          <div className="flex justify-center gap-2 my-4">
-            <div
-              className="w-8 h-8 rounded-full"
-              style={{ backgroundColor: primaryColor }}
-            ></div>
-            <div
-              className="w-8 h-8 rounded-full"
-              style={{ backgroundColor: secondaryColor }}
-            ></div>
-            <div
-              className="w-8 h-8 rounded-full"
-              style={{ backgroundColor: bgColor }}
-            ></div>
-          </div>
-        );
-      case "contrast":
-        return (
-          <div
-            className="my-4 p-3 rounded"
-            style={{ backgroundColor: bgColor }}
-          >
-            <div className="flex flex-col gap-2">
-              <div
-                className="h-2 w-3/4 rounded"
-                style={{ backgroundColor: textColor }}
-              ></div>
-              <div
-                className="h-2 w-1/2 rounded"
-                style={{ backgroundColor: primaryColor }}
-              ></div>
-              <div
-                className="h-2 w-2/3 rounded"
-                style={{ backgroundColor: textColor }}
-              ></div>
-            </div>
-          </div>
-        );
-      case "hierarchy":
-        return (
-          <div
-            className="my-4 p-3 rounded"
-            style={{ backgroundColor: bgColor }}
-          >
-            <div className="flex flex-col gap-2">
-              <div
-                className="h-2 rounded"
-                style={{ backgroundColor: syntaxColors.keyword }}
-              ></div>
-              <div
-                className="h-2 rounded"
-                style={{ backgroundColor: textColor }}
-              ></div>
-              <div
-                className="h-2 rounded"
-                style={{ backgroundColor: syntaxColors.comment }}
-              ></div>
-            </div>
-          </div>
-        );
-      case "minimal-palette":
-        return (
-          <div className="flex flex-wrap justify-center gap-1 my-4">
-            <div
-              className="w-5 h-5 rounded-full"
-              style={{ backgroundColor: syntaxColors.keyword }}
-            ></div>
-            <div
-              className="w-5 h-5 rounded-full"
-              style={{ backgroundColor: syntaxColors.function }}
-            ></div>
-            <div
-              className="w-5 h-5 rounded-full"
-              style={{ backgroundColor: syntaxColors.operator }}
-            ></div>
-            <div
-              className="w-5 h-5 rounded-full"
-              style={{ backgroundColor: syntaxColors.type }}
-            ></div>
-            <div
-              className="w-5 h-5 rounded-full"
-              style={{ backgroundColor: syntaxColors.comment }}
-            ></div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
-  // Code snippet with proper syntax highlighting for demonstration
-  // REMOVED: const codeSnippet = `...`;
-
   return (
     <section
       className="py-20 sm:py-28 overflow-hidden relative"
       id="color-theory"
     >
-      {/* Background Elements */} {/* <-- FIX: Wrap comment */}
+      {/* Background Elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--primary-rgb),0.08),transparent_80%)]"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
@@ -302,10 +88,7 @@ export function ColorTheorySection() {
       <div className="container px-4 sm:px-8 mx-auto max-w-7xl">
         <motion.div
           className="flex flex-col items-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
+          {...pageAnimations.fadeInUp}
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
             <Sparkles className="h-4 w-4" />
@@ -324,11 +107,11 @@ export function ColorTheorySection() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          {/* Left side - Principles list */} {/* <-- FIX: Wrap comment */}
+          {/* Left side - Principles list */}
           <div className="lg:col-span-2">
             <motion.div
               className="space-y-4"
-              variants={containerVariants}
+              variants={pageAnimations.containerVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
@@ -337,7 +120,7 @@ export function ColorTheorySection() {
               {processedColorTheoryPrinciples.map((principle) => (
                 <motion.div
                   key={principle.id}
-                  variants={itemVariants}
+                  variants={pageAnimations.itemVariants}
                   className={`border border-border rounded-xl overflow-hidden transition-all duration-300 ${
                     expandedTheory === principle.id
                       ? "shadow-lg border-primary/30"
@@ -355,7 +138,7 @@ export function ColorTheorySection() {
                           : "bg-primary/10 text-primary/80"
                       }`}
                     >
-                      {principle.icon} {/* Use the icon component */}
+                      {principle.icon}
                     </div>
                     <div className="flex-grow">
                       <h3 className="font-medium">{principle.title}</h3>
@@ -372,7 +155,7 @@ export function ColorTheorySection() {
                   {expandedTheory === principle.id && (
                     <div className="px-4 pb-4 pt-0">
                       <div className="pt-2 pb-3 border-t border-border">
-                        {renderColorWheel(principle.illustration)}
+                        {getColorTheoryIllustration(principle.illustration, themeColors)}
 
                         <div className="space-y-3 mt-3">
                           <div>
@@ -401,22 +184,19 @@ export function ColorTheorySection() {
                               In V Theme
                             </h4>
                             <p className="text-sm text-muted-foreground mt-1">
-                              {principle.example}{" "}
-                              {/* Use the processed example */}
+                              {principle.example}
                             </p>
                           </div>
 
                           <div className="flex gap-2 mt-4">
-                            {principle.colors.map(
-                              (color, index /* Use processed colors */) => (
-                                <div
-                                  key={index}
-                                  className="flex-grow h-8 rounded"
-                                  style={{ backgroundColor: color }}
-                                  title={color}
-                                ></div>
-                              )
-                            )}
+                            {principle.colors.map((color, index) => (
+                              <div
+                                key={index}
+                                className="flex-grow h-8 rounded"
+                                style={{ backgroundColor: color }}
+                                title={color}
+                              ></div>
+                            ))}
                           </div>
                         </div>
                       </div>
@@ -426,14 +206,11 @@ export function ColorTheorySection() {
               ))}
             </motion.div>
           </div>
-          {/* Right side - Visual demonstration */}{" "}
-          {/* <-- FIX: Wrap comment */}
+          
+          {/* Right side - Visual demonstration */}
           <motion.div
             className="lg:col-span-3"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            {...pageAnimations.fadeInRight}
           >
             <div className="bg-card border border-border rounded-xl overflow-hidden shadow-lg">
               <div className="p-5 border-b border-border">
@@ -601,35 +378,7 @@ export function ColorTheorySection() {
                           <Palette className="h-4 w-4 text-primary" />
                           Analogous Color Harmony
                         </h4>
-                        <div
-                          className="p-4 rounded-lg"
-                          style={{ backgroundColor: bgColor }}
-                        >
-                          <div className="flex justify-between items-center">
-                            <div
-                              className="w-12 h-12 rounded-full border"
-                              style={{ backgroundColor: bgColor }}
-                            ></div>
-                            <ChevronRight
-                              className="text-[var(--primary-color)]"
-                              style={{ "--primary-color": primaryColor } as any}
-                            />
-                            <div
-                              className="w-12 h-12 rounded-full"
-                              style={{ backgroundColor: primaryColor }}
-                            ></div>
-                            <ChevronRight
-                              className="text-[var(--secondary-color)]"
-                              style={
-                                { "--secondary-color": secondaryColor } as any
-                              }
-                            />
-                            <div
-                              className="w-12 h-12 rounded-full"
-                              style={{ backgroundColor: secondaryColor }}
-                            ></div>
-                          </div>
-                        </div>
+                        <AnalogousColorHarmony themeColors={themeColors} />
                         <p className="text-xs text-muted-foreground mt-2">
                           V Theme uses colors adjacent on the color wheel to
                           create harmony.
@@ -641,40 +390,7 @@ export function ColorTheorySection() {
                           <Eye className="h-4 w-4 text-primary" />
                           Contrast for Readability
                         </h4>
-                        <div
-                          className="p-4 rounded-lg"
-                          style={{ backgroundColor: bgColor }}
-                        >
-                          <div className="space-y-3">
-                            <div
-                              className="p-2 rounded"
-                              style={{ backgroundColor: primaryColor }}
-                            >
-                              <div
-                                className="h-4 rounded w-4/5"
-                                style={{ backgroundColor: bgColor }}
-                              ></div>
-                            </div>
-                            <div
-                              className="p-2 rounded"
-                              style={{ backgroundColor: syntaxColors.keyword }}
-                            >
-                              <div
-                                className="h-4 rounded w-3/5"
-                                style={{ backgroundColor: bgColor }}
-                              ></div>
-                            </div>
-                            <div
-                              className="p-2 rounded"
-                              style={{ backgroundColor: textColor }}
-                            >
-                              <div
-                                className="h-4 rounded w-2/3"
-                                style={{ backgroundColor: bgColor }}
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
+                        <ContrastReadability themeColors={themeColors} />
                         <p className="text-xs text-muted-foreground mt-2">
                           Optimized contrast for extended reading without eye
                           strain.
@@ -697,13 +413,13 @@ export function ColorTheorySection() {
                           <div>
                             <div
                               className="text-xs"
-                              style={{ color: syntaxColors.comment }}
+                              style={{ color: syntax.comment }}
                             >
                               {/* Comment - less important */}
                             </div>
-                            <div style={{ color: syntaxColors.keyword }}>
+                            <div style={{ color: syntax.keyword }}>
                               function{" "}
-                              <span style={{ color: syntaxColors.function }}>
+                              <span style={{ color: syntax.function }}>
                                 getData
                               </span>
                               ()
@@ -712,7 +428,7 @@ export function ColorTheorySection() {
                                 style={{ color: textColor }}
                               >
                                 return{" "}
-                                <span style={{ color: syntaxColors.type }}>
+                                <span style={{ color: syntax.type }}>
                                   Result
                                 </span>
                                 ;
@@ -750,17 +466,17 @@ export function ColorTheorySection() {
                                 <div
                                   className="w-3 h-3 rounded-full"
                                   style={{
-                                    backgroundColor: syntaxColors.keyword,
+                                    backgroundColor: syntax.keyword,
                                   }}
                                 ></div>
                                 <div
                                   className="w-3 h-3 rounded-full"
-                                  style={{ backgroundColor: syntaxColors.type }}
+                                  style={{ backgroundColor: syntax.type }}
                                 ></div>
                                 <div
                                   className="w-3 h-3 rounded-full"
                                   style={{
-                                    backgroundColor: syntaxColors.comment,
+                                    backgroundColor: syntax.comment,
                                   }}
                                 ></div>
                               </div>
