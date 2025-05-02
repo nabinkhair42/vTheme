@@ -49,14 +49,14 @@ export function HeroSection() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
+        staggerChildren: 0.15,
         delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
@@ -65,7 +65,7 @@ export function HeroSection() {
   };
 
   const imageVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: { opacity: 0, scale: 0.8 },
     visible: {
       opacity: 1,
       scale: 1,
@@ -73,28 +73,35 @@ export function HeroSection() {
         type: "spring",
         stiffness: 70,
         damping: 20,
-        delay: 0.3,
+        delay: 0.4,
       },
     },
     hover: {
-      y: -5,
+      y: -8,
+      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)",
       transition: { type: "spring", stiffness: 200, damping: 25 },
     },
   };
 
+  const gradientOverlayStyle = {
+    background: isLightTheme
+      ? "linear-gradient(120deg, rgba(0, 163, 163, 0.1), rgba(0, 114, 198, 0.1))"
+      : "linear-gradient(120deg, rgba(100, 255, 218, 0.1), rgba(130, 170, 255, 0.1))",
+  };
+
   return (
-    <section className="w-full py-16 md:py-20 lg:py-28 relative overflow-hidden">
+    <section className="w-full py-20 md:py-24 lg:py-32 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
         <div className="absolute bottom-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
 
-        <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] opacity-60"></div>
-        <div className="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] opacity-60"></div>
+        <div className="absolute top-1/3 -left-1/3 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] opacity-60"></div>
+        <div className="absolute -bottom-1/3 -right-1/3 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px] opacity-60"></div>
 
-        {/* Animated particles/stars effect - reduced quantity for better performance */}
+        {/* Animated particles/stars effect */}
         <div className="stars-container absolute inset-0">
-          {[...Array(12)].map((_, i) => (
+          {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-primary/70 rounded-full"
@@ -103,13 +110,13 @@ export function HeroSection() {
                 left: `${Math.random() * 100}%`,
               }}
               animate={{
-                opacity: [0.2, 0.7, 0.2],
-                scale: [1, 1.4, 1],
+                opacity: [0.2, 0.8, 0.2],
+                scale: [1, 1.5, 1],
               }}
               transition={{
-                duration: 4 + Math.random() * 4,
+                duration: 4 + Math.random() * 6,
                 repeat: Infinity,
-                delay: Math.random() * 3,
+                delay: Math.random() * 5,
               }}
             />
           ))}
@@ -119,7 +126,7 @@ export function HeroSection() {
       {/* Main content */}
       <div className="container px-4 md:px-6 relative z-10">
         <motion.div
-          className="flex flex-col items-center justify-center space-y-10 lg:space-y-12 text-center"
+          className="flex flex-col items-center justify-center space-y-12 md:space-y-16 text-center"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -128,27 +135,27 @@ export function HeroSection() {
           <motion.div variants={itemVariants}>
             <Badge
               variant="outline"
-              className="px-4 py-1.5 gap-2 text-sm font-medium border-primary/30 backdrop-blur-sm"
+              className="px-4 py-2 gap-2 text-sm font-medium border-primary/30 backdrop-blur-sm"
             >
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
+              <Sparkles className="h-4 w-4 text-primary" />
               <span>V Theme 1.0 — {new Date().getFullYear()}</span>
             </Badge>
           </motion.div>
 
           {/* Main heading and description */}
           <motion.div
-            className="space-y-5 max-w-3xl mx-auto"
+            className="space-y-6 max-w-3xl mx-auto"
             variants={itemVariants}
           >
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               The{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-600 dark:from-primary dark:to-cyan-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-600 dark:from-primary dark:to-cyan-400 ">
                 Perfect
               </span>{" "}
               VS Code Theme for Developers
             </h1>
 
-            <p className="mx-auto max-w-[700px] text-muted-foreground text-base md:text-lg">
+            <p className="mx-auto max-w-[800px] text-muted-foreground md:text-xl">
               A professionally crafted color theme based on advanced color
               theory principles, designed to reduce eye strain and enhance code
               readability during long coding sessions
@@ -156,35 +163,31 @@ export function HeroSection() {
           </motion.div>
 
           {/* Action buttons */}
-          <motion.div variants={itemVariants} className="space-y-5 w-full max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button 
-                size="lg" 
-                className="gap-2 relative overflow-hidden group"
-                asChild
-              >
+          <motion.div variants={itemVariants} className="space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button className="h-14 px-8 gap-3 relative overflow-hidden group">
+                <Download className="h-5 w-5" />
+                Install V Theme
                 <a
-                  href="#installation"
-                  className="flex items-center"
-                >
-                  <Download className="h-4 w-4" />
-                  Get V Theme
-                </a>
+                  href="https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute inset-0"
+                  aria-label="Install V Theme from VS Code Marketplace"
+                />
               </Button>
 
               <Button
-                variant="outline"
-                size="lg"
-                className="gap-2 border-primary/20"
-                asChild
+                variant="secondary"
+                className="h-14 px-8 gap-3 border-primary/30 transition-all"
               >
                 <a
                   href="https://github.com/nabinkhair42/vtheme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center"
+                  className="flex items-center gap-2"
                 >
-                  <FaGithub className="h-4 w-4" />
+                  <FaGithub  className="h-5 w-5" />
                   View on GitHub
                 </a>
               </Button>
@@ -192,7 +195,7 @@ export function HeroSection() {
 
             {/* Quick copy code snippet */}
             <div
-              className="relative rounded-lg border border-border/60 overflow-hidden bg-card/50 backdrop-blur-sm cursor-pointer hover:border-primary/40 transition-colors group"
+              className="relative max-w-lg mx-auto rounded-lg border border-border/60 overflow-hidden bg-card/50 backdrop-blur-sm cursor-pointer hover:border-primary/40 transition-colors"
               onClick={handleCopyCommand}
             >
               <div className="flex items-center text-xs gap-2 p-2 border-b border-border/60 bg-muted/20">
@@ -203,15 +206,18 @@ export function HeroSection() {
                 </div>
                 <span className="text-muted-foreground">Terminal</span>
               </div>
-              <div className="px-4 py-3 flex items-center justify-between group-hover:bg-muted/20 transition-colors">
+              <div className="px-4 py-3 flex items-center justify-between">
                 <code className="font-mono text-sm">
                   code --install-extension nabinkhair.vtheme
                 </code>
-                <div className="text-muted-foreground">
+                <div
+                  className="tooltip"
+                  data-tip={copySuccess ? "Copied!" : "Copy to clipboard"}
+                >
                   {copySuccess ? (
                     <CheckCircle2 className="h-4 w-4 text-green-500" />
                   ) : (
-                    <Copy className="h-4 w-4 group-hover:text-foreground transition-colors" />
+                    <Copy className="h-4 w-4 text-muted-foreground" />
                   )}
                 </div>
               </div>
@@ -220,7 +226,7 @@ export function HeroSection() {
 
           {/* Theme preview */}
           <motion.div
-            className="w-full max-w-5xl mx-auto mt-6"
+            className="w-full max-w-6xl mx-auto"
             variants={imageVariants}
             initial="hidden"
             animate="visible"
@@ -230,9 +236,9 @@ export function HeroSection() {
           >
             <div className="relative group">
               {/* Theme image preview */}
-              <div className="relative rounded-xl overflow-hidden border border-border/60 shadow-xl">
+              <div className="relative rounded-xl overflow-hidden border border-border/60 shadow-2xl">
                 {/* Top editor bar */}
-                <div className="flex items-center px-4 py-2 bg-card/80 border-b border-border/60 backdrop-blur-sm">
+                <div className="flex items-center px-4 py-2 bg-card/80 border-b border-border/60">
                   <div className="flex space-x-2 mr-3">
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -245,22 +251,36 @@ export function HeroSection() {
 
                   {/* Theme switch control */}
                   <div className="ml-auto flex items-center">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 gap-1.5 rounded-full text-xs font-medium"
-                      onClick={() => setTheme(isLightTheme ? "dark" : "light")}
+                    <motion.div
+                      className={`flex h-7 rounded-full p-1 bg-card/80 backdrop-blur-sm border border-border/40 shadow-inner`}
+                      initial={false}
+                      animate={{ x: isLightTheme ? 0 : 2 }}
                     >
-                      {isLightTheme ? (
-                        <>
-                          <Moon className="h-3.5 w-3.5" /> Dark
-                        </>
-                      ) : (
-                        <>
-                          <Sun className="h-3.5 w-3.5" /> Light
-                        </>
-                      )}
-                    </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className={`h-5 w-5 rounded-full ${
+                          !isLightTheme
+                            ? "bg-primary/20 text-primary"
+                            : "text-muted-foreground"
+                        }`}
+                        onClick={() => setTheme("dark")}
+                      >
+                        <Moon className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className={`h-5 w-5 rounded-full ${
+                          isLightTheme
+                            ? "bg-primary/20 text-primary"
+                            : "text-muted-foreground"
+                        }`}
+                        onClick={() => setTheme("light")}
+                      >
+                        <Sun className="h-3 w-3" />
+                      </Button>
+                    </motion.div>
                   </div>
                 </div>
 
@@ -292,8 +312,20 @@ export function HeroSection() {
                   </AnimatePresence>
                 </div>
 
+                {/* Overlay with gradient when hovered */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none opacity-0 rounded-xl"
+                  animate={{ opacity: isHovered ? 0.05 : 0 }}
+                  style={gradientOverlayStyle}
+                ></motion.div>
+
                 {/* Feature badges */}
-                <div className="absolute bottom-4 left-4 px-3 py-1.5 bg-background/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
+                <motion.div
+                  className="absolute bottom-4 left-4 px-3 py-1.5 bg-background/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                >
                   <div className="flex items-center gap-1.5">
                     <Star
                       fill="currentColor"
@@ -303,23 +335,55 @@ export function HeroSection() {
                       {rating}/5 rating
                     </span>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="absolute bottom-4 right-4 px-3 py-1.5 bg-background/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg">
+                <motion.div
+                  className="absolute bottom-4 right-4 px-3 py-1.5 bg-background/80 backdrop-blur-sm rounded-full border border-primary/20 shadow-lg"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 }}
+                >
                   <div className="flex items-center gap-1.5">
                     <Download className="h-3.5 w-3.5 text-primary" />
                     <span className="text-xs font-medium">
                       {installCount.toLocaleString()}+ installs
                     </span>
                   </div>
-                </div>
+                </motion.div>
               </div>
+
+              {/* Theme toggle instruction */}
+              <motion.div
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: isHovered ? 1 : 0,
+                  scale: isHovered ? 1 : 0.8,
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  onClick={() => setTheme(isLightTheme ? "dark" : "light")}
+                >
+                  {isLightTheme ? (
+                    <>
+                      <Moon className="mr-2 h-4 w-4" /> Try Dark Mode
+                    </>
+                  ) : (
+                    <>
+                      <Sun className="mr-2 h-4 w-4" /> Try Light Mode
+                    </>
+                  )}
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
 
           {/* Feature highlights */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto mt-2 px-2"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto mt-4 px-2"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -353,14 +417,15 @@ export function HeroSection() {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="relative p-5 rounded-lg border border-border/60 bg-card/50 backdrop-blur-sm hover:border-primary/30 hover:bg-card/80 transition-all duration-300"
+                className="relative group p-5 rounded-2xl border border-border/60 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors"
                 variants={itemVariants}
               >
-                <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-center w-9 h-9 mb-3 rounded-md bg-primary/10 text-primary">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-400/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-primary/10 text-primary">
                     {feature.icon}
                   </div>
-                  <h3 className="text-sm font-semibold mb-1.5">
+                  <h3 className="text-base font-semibold mb-1.5">
                     {feature.title}
                   </h3>
                   <p className="text-xs text-muted-foreground">
