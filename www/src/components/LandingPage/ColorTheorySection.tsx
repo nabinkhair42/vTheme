@@ -11,14 +11,26 @@ import {
   Eye,
   Brain,
   LayoutPanelLeft,
-  ChevronRight,
+  // ChevronRight, // Not used anymore? Keep if needed elsewhere
   Plus,
   Minus,
-  Mail,
+  LucideIcon,
+  ChevronRight, // Import LucideIcon type
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { darkThemeColors, lightThemeColors } from "@/data/colorPaletteData";
+import { colorTheoryPrinciplesData } from "@/data/colorTheory"; // Import the data
+
+// Map icon names to actual components
+const iconComponents: Record<string, LucideIcon> = {
+  Paintbrush,
+  Lightbulb,
+  Palette,
+  Eye,
+  Brain,
+  LayoutPanelLeft,
+};
 
 export function ColorTheorySection() {
   const { theme } = useTheme();
@@ -63,89 +75,49 @@ export function ColorTheorySection() {
     operator: currentTheme === "light" ? "#0072C6" : "#82AAFF", // Blue
   };
 
+  // Helper to get color value by key (handles nested syntax colors)
+  const getColorValue = (key: string): string => {
+    if (key.startsWith("syntax.")) {
+      const syntaxKey = key.split(".")[1] as keyof typeof syntaxColors;
+      return syntaxColors[syntaxKey];
+    }
+    switch (key) {
+      case "bgColor":
+        return bgColor;
+      case "primaryColor":
+        return primaryColor;
+      case "secondaryColor":
+        return secondaryColor;
+      case "textColor":
+        return textColor;
+      default:
+        return "#000000"; // Fallback
+    }
+  };
+
+  // Process the imported data to create the final array for rendering
+  const processedColorTheoryPrinciples = colorTheoryPrinciplesData.map(
+    (principle) => {
+      const IconComponent = iconComponents[principle.iconName];
+      const example = principle.exampleTemplate
+        .replace("{bgColor}", bgColor)
+        .replace("{primaryColor}", primaryColor)
+        .replace("{secondaryColor}", secondaryColor)
+        .replace("{textColor}", textColor); // Add more replacements if needed
+
+      const colors = principle.colorKeys.map(getColorValue);
+
+      return {
+        ...principle,
+        icon: <IconComponent className="h-5 w-5" />, // Get the actual icon component
+        example, // Use the processed example string
+        colors, // Use the dynamically fetched colors
+      };
+    }
+  );
+
   // Define color theory principles with descriptions matching the requirements
-  const colorTheoryPrinciples = [
-    {
-      id: "analogous",
-      title: "Analogous Color Scheme",
-      icon: <Palette className="h-5 w-5" />,
-      theory:
-        "Analogous colors are those next to each other on the color wheel (e.g., blue → teal → cyan).",
-      effect: "Creates a harmonious, unified look that's easy on the eyes.",
-      example: `Navy (${bgColor}), teal (${primaryColor}), blue (${secondaryColor}) — all cool tones that flow naturally.`,
-      colors: [bgColor, primaryColor, secondaryColor],
-      illustration: "analogous-wheel",
-    },
-    {
-      id: "hsv",
-      title: "Hue, Saturation, and Value (HSV Model)",
-      icon: <Paintbrush className="h-5 w-5" />,
-      theory:
-        "Good themes vary hue (color), saturation (intensity), and value (lightness/darkness) to create visual hierarchy.",
-      effect: "Guides attention subtly without visual noise.",
-      example:
-        "Bright functions vs. muted comments — this difference in value and saturation helps users prioritize information.",
-      colors: [
-        syntaxColors.keyword,
-        syntaxColors.comment,
-        syntaxColors.function,
-      ],
-      illustration: "hsv-model",
-    },
-    {
-      id: "cool-colors",
-      title: "Cool Colors Psychology",
-      icon: <Brain className="h-5 w-5" />,
-      theory:
-        'Blues, greens, and teals are "cool" colors that evoke calmness, stability, and focus.',
-      effect: "Users feel relaxed and attentive, not overstimulated.",
-      example:
-        "Ideal for development environments, where long focus sessions are key.",
-      colors: [primaryColor, secondaryColor, bgColor],
-      illustration: "cool-colors",
-    },
-    {
-      id: "contrast",
-      title: "Contrast and Accessibility",
-      icon: <Eye className="h-5 w-5" />,
-      theory: "Contrast between background and foreground improves legibility.",
-      effect: "Lowers cognitive load, improves code comprehension.",
-      example: `Uses dark backgrounds with soft-light text and just enough contrast for syntax clarity — avoiding harsh brightness.`,
-      colors: [bgColor, textColor, primaryColor],
-      illustration: "contrast",
-    },
-    {
-      id: "hierarchy",
-      title: "Visual Hierarchy Using Color",
-      icon: <LayoutPanelLeft className="h-5 w-5" />,
-      theory:
-        "High-saturation or bright colors draw the eye. Desaturated or darker colors recede.",
-      effect:
-        "Important code elements (like keywords) stand out; less important ones (like punctuation or comments) fade back.",
-      example:
-        "Leverages this subtly — functions and variables are brighter than comments or brackets.",
-      colors: [syntaxColors.keyword, textColor, syntaxColors.comment],
-      illustration: "hierarchy",
-    },
-    {
-      id: "minimal",
-      title: "Minimal Palette Reduces Cognitive Load",
-      icon: <Lightbulb className="h-5 w-5" />,
-      theory:
-        "Too many colors overwhelm working memory. Simpler schemes help comprehension.",
-      effect:
-        "The brain can process code faster when it isn't flooded with color variation.",
-      example: "Uses a limited but expressive palette — strategic, not noisy.",
-      colors: [
-        syntaxColors.keyword,
-        syntaxColors.function,
-        syntaxColors.operator,
-        syntaxColors.type,
-        syntaxColors.comment,
-      ],
-      illustration: "minimal-palette",
-    },
-  ];
+  // REMOVED: const colorTheoryPrinciples = [ ... ];
 
   // Toggle expanding a theory card
   const toggleExpand = (theoryId: string) => {
@@ -314,87 +286,19 @@ export function ColorTheorySection() {
   };
 
   // Code snippet with proper syntax highlighting for demonstration
-  const codeSnippet = `function processData(input: string[]): Result {
-  // Transform raw data into structured format
-  const result = input.map((item) => {
-    const value = parseInt(item);
-    if (value > 100) {
-      return { 
-        status: "success",
-        data: value * 2 
-      };
-    } else {
-      return { 
-        status: "error",
-        message: "Value too low"
-      };
-    }
-  });
-  
-  console.log(\`Processed \${result.length} items\`);
-  return result;
-}`;
-
-  const highlightSyntax = (code: string) => {
-    // Apply syntax highlighting with theme colors
-    return (
-      code
-        // Keywords
-        .replace(
-          /\b(function|const|let|var|if|else|return|interface|type|class|extends|implements|new|this|import|export|from|as|of|for|while|do|switch|case|break|continue|async|await|try|catch|throw|typeof|instanceof|void|null|undefined|true|false)\b/g,
-          `<span style="color: ${syntaxColors.keyword}">$1</span>`
-        )
-        // Strings
-        .replace(
-          /(['"`])((?:\\.|(?!\1)[^\\])*)\1/g,
-          `<span style="color: ${syntaxColors.string}">$&</span>`
-        )
-        // Numbers
-        .replace(
-          /\b(\d+)\b/g,
-          `<span style="color: ${syntaxColors.number}">$1</span>`
-        )
-        // Functions
-        .replace(
-          /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g,
-          `<span style="color: ${syntaxColors.function}">$1</span>(`
-        )
-        // Comments
-        .replace(
-          /(\/\/.*$)/gm,
-          `<span style="color: ${syntaxColors.comment}">$1</span>`
-        )
-        // Types
-        .replace(/:?\s*\b([A-Z][a-zA-Z0-9_$]*)\b/g, (match, p1) =>
-          match.includes(":")
-            ? `: <span style="color: ${syntaxColors.type}">${p1}</span>`
-            : `<span style="color: ${syntaxColors.type}">${p1}</span>`
-        )
-        // Variables after declaration
-        .replace(
-          /\b(const|let|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g,
-          `<span style="color: ${syntaxColors.keyword}">$1</span> <span style="color: ${syntaxColors.variable}">$2</span>`
-        )
-        // Operators
-        .replace(
-          /([=!<>+\-*/%&|^~?:]+)(?![^<]*>)/g,
-          `<span style="color: ${syntaxColors.operator}">$1</span>`
-        )
-    );
-  };
+  // REMOVED: const codeSnippet = `...`;
 
   return (
     <section
       className="py-20 sm:py-28 overflow-hidden relative"
       id="color-theory"
     >
-      {/* Background Elements */}
+      {/* Background Elements */} {/* <-- FIX: Wrap comment */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--primary-rgb),0.08),transparent_80%)]"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
       </div>
-
       <div className="container px-4 sm:px-8 mx-auto max-w-7xl">
         <motion.div
           className="flex flex-col items-center mb-16"
@@ -420,7 +324,7 @@ export function ColorTheorySection() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-          {/* Left side - Principles list */}
+          {/* Left side - Principles list */} {/* <-- FIX: Wrap comment */}
           <div className="lg:col-span-2">
             <motion.div
               className="space-y-4"
@@ -429,7 +333,8 @@ export function ColorTheorySection() {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
             >
-              {colorTheoryPrinciples.map((principle) => (
+              {/* Use the processed data */}
+              {processedColorTheoryPrinciples.map((principle) => (
                 <motion.div
                   key={principle.id}
                   variants={itemVariants}
@@ -450,7 +355,7 @@ export function ColorTheorySection() {
                           : "bg-primary/10 text-primary/80"
                       }`}
                     >
-                      {principle.icon}
+                      {principle.icon} {/* Use the icon component */}
                     </div>
                     <div className="flex-grow">
                       <h3 className="font-medium">{principle.title}</h3>
@@ -496,19 +401,22 @@ export function ColorTheorySection() {
                               In V Theme
                             </h4>
                             <p className="text-sm text-muted-foreground mt-1">
-                              {principle.example}
+                              {principle.example}{" "}
+                              {/* Use the processed example */}
                             </p>
                           </div>
 
                           <div className="flex gap-2 mt-4">
-                            {principle.colors.map((color, index) => (
-                              <div
-                                key={index}
-                                className="flex-grow h-8 rounded"
-                                style={{ backgroundColor: color }}
-                                title={color}
-                              ></div>
-                            ))}
+                            {principle.colors.map(
+                              (color, index /* Use processed colors */) => (
+                                <div
+                                  key={index}
+                                  className="flex-grow h-8 rounded"
+                                  style={{ backgroundColor: color }}
+                                  title={color}
+                                ></div>
+                              )
+                            )}
                           </div>
                         </div>
                       </div>
@@ -518,8 +426,8 @@ export function ColorTheorySection() {
               ))}
             </motion.div>
           </div>
-
-          {/* Right side - Visual demonstration */}
+          {/* Right side - Visual demonstration */}{" "}
+          {/* <-- FIX: Wrap comment */}
           <motion.div
             className="lg:col-span-3"
             initial={{ opacity: 0, x: 20 }}
@@ -791,7 +699,7 @@ export function ColorTheorySection() {
                               className="text-xs"
                               style={{ color: syntaxColors.comment }}
                             >
-                              // Comment - less important
+                              {/* Comment - less important */}
                             </div>
                             <div style={{ color: syntaxColors.keyword }}>
                               function{" "}

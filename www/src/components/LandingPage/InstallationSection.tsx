@@ -18,22 +18,22 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import {
+  InstallationMethod,
+  installationTabs,
+  installationCommands,
+  installationSteps,
+  marketplaceData,
+  sectionData,
+} from "@/data/installation";
 
 export function InstallationSection() {
   const { theme } = useTheme();
-  const [activeTab, setActiveTab] = useState<
-    "marketplace" | "cli" | "extension"
-  >("marketplace");
+  const [activeTab, setActiveTab] = useState<InstallationMethod>("marketplace");
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const [terminalText, setTerminalText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
-
-  // Commands for installation methods
-  const commands = {
-    cli: "code --install-extension nabinkhair.vtheme",
-    extension: "ext install nabinkhair.vtheme",
-  };
 
   // Copy command to clipboard
   const copyToClipboard = (text: string, type: string) => {
@@ -45,7 +45,7 @@ export function InstallationSection() {
   // Terminal typing animation
   useEffect(() => {
     if (activeTab === "cli") {
-      const command = commands.cli || "";
+      const command = installationCommands.cli || "";
       setTerminalText("");
       setIsTyping(true);
 
@@ -74,7 +74,7 @@ export function InstallationSection() {
 
       return () => clearInterval(typingInterval);
     }
-  }, [activeTab, commands.cli]);
+  }, [activeTab]);
 
   // Scroll terminal to bottom when text changes
   useEffect(() => {
@@ -102,6 +102,20 @@ export function InstallationSection() {
       opacity: 1,
       transition: { type: "spring", stiffness: 100 },
     },
+  };
+
+  // Helper function to render appropriate icon
+  const renderIcon = (iconName: string) => {
+    switch (iconName) {
+      case "Sparkles":
+        return <Sparkles className="h-5 w-5" />;
+      case "Terminal":
+        return <Terminal className="h-5 w-5" />;
+      case "Code2":
+        return <Code2 className="h-5 w-5" />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -134,15 +148,14 @@ export function InstallationSection() {
             variants={itemVariants}
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 tracking-tight"
           >
-            Get <span className="text-primary">V Theme</span> in 60 Seconds
+            <span className="text-primary">V Theme</span> {sectionData.title}
           </motion.h2>
 
           <motion.p
             variants={itemVariants}
             className="text-muted-foreground text-center max-w-2xl text-base sm:text-lg mb-16"
           >
-            Choose your preferred installation method and transform your coding
-            environment
+            {sectionData.subtitle}
           </motion.p>
 
           {/* Tab navigation for installation methods */}
@@ -153,41 +166,20 @@ export function InstallationSection() {
             <div className="absolute h-[1px] bottom-0 left-0 right-0 bg-border"></div>
 
             <div className="flex flex-wrap justify-center sm:justify-around">
-              <button
-                onClick={() => setActiveTab("marketplace")}
-                className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors ${
-                  activeTab === "marketplace"
-                    ? "border-primary text-foreground"
-                    : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-                }`}
-              >
-                <Sparkles className="h-5 w-5" />
-                <span className="font-medium">VS Code Marketplace</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab("cli")}
-                className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors ${
-                  activeTab === "cli"
-                    ? "border-primary text-foreground"
-                    : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-                }`}
-              >
-                <Terminal className="h-5 w-5" />
-                <span className="font-medium">Command Line</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab("extension")}
-                className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors ${
-                  activeTab === "extension"
-                    ? "border-primary text-foreground"
-                    : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
-                }`}
-              >
-                <Code2 className="h-5 w-5" />
-                <span className="font-medium">Extension Panel</span>
-              </button>
+              {installationTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors ${
+                    activeTab === tab.id
+                      ? "border-primary text-foreground"
+                      : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                  }`}
+                >
+                  {renderIcon(tab.icon)}
+                  <span className="font-medium">{tab.label}</span>
+                </button>
+              ))}
             </div>
           </motion.div>
 
@@ -240,27 +232,27 @@ export function InstallationSection() {
                         </div>
 
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold">V Theme</h3>
+                          <h3 className="text-lg font-semibold">{marketplaceData.title}</h3>
                           <p className="text-sm text-muted-foreground mb-3">
-                            A professionally crafted VS Code theme
+                            {marketplaceData.description}
                           </p>
 
                           <div className="flex items-center gap-3 mb-4">
                             <div className="flex items-center gap-1">
                               <div className="text-amber-500 flex">
-                                {[1, 2, 3, 4, 5].map((i) => (
+                                {Array.from({ length: marketplaceData.ratings }).map((_, i) => (
                                   <Star key={i} size={14} fill="currentColor" />
                                 ))}
                               </div>
-                              <span className="text-xs">(42)</span>
+                              <span className="text-xs">({marketplaceData.ratingCount})</span>
                             </div>
 
                             <div className="text-xs text-muted-foreground">
-                              3.5K+ installs
+                              {marketplaceData.installs} installs
                             </div>
 
                             <div className="text-xs text-muted-foreground">
-                              Updated April 2025
+                              Updated {marketplaceData.updated}
                             </div>
                           </div>
 
@@ -281,71 +273,46 @@ export function InstallationSection() {
                   </h3>
 
                   <ol className="space-y-6">
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        1
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Open Extensions View</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Press{" "}
-                          <kbd className="px-2 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+Shift+X
-                          </kbd>{" "}
-                          or click Extensions icon in the Activity Bar
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        2
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Search for V Theme</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Type "V Theme" in the search box
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        3
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Click Install</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Find V Theme in the results and click the Install
-                          button
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        4
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Apply the Theme</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Press{" "}
-                          <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+K
-                          </kbd>{" "}
-                          <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+T
-                          </kbd>{" "}
-                          and select V Theme
-                        </p>
-                      </div>
-                    </li>
+                    {installationSteps.marketplace.map((step, index) => (
+                      <li key={index} className="flex gap-4">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <h4 className="font-medium">{step.title}</h4>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {step.title.includes("Extensions") ? (
+                              <>
+                                Press{" "}
+                                <kbd className="px-2 py-0.5 rounded bg-muted text-xs">
+                                  Ctrl+Shift+X
+                                </kbd>{" "}
+                                or click Extensions icon in the Activity Bar
+                              </>
+                            ) : step.title.includes("Apply") ? (
+                              <>
+                                Press{" "}
+                                <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
+                                  Ctrl+K
+                                </kbd>{" "}
+                                <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
+                                  Ctrl+T
+                                </kbd>{" "}
+                                and select V Theme
+                              </>
+                            ) : (
+                              step.description
+                            )}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
                   </ol>
 
                   <div className="mt-8">
                     <Button className="flex items-center gap-2" asChild>
                       <a
-                        href="https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme"
+                        href={sectionData.marketplaceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -407,72 +374,58 @@ export function InstallationSection() {
                   </h3>
 
                   <ol className="space-y-6">
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        1
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Open a Terminal</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Open your command line or terminal application
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        2
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Run the Command</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Copy and paste the command below:
-                        </p>
-
-                        <div className="mt-2 relative">
-                          <div className="bg-muted p-3 rounded-md font-mono text-sm overflow-x-auto">
-                            {commands.cli}
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="absolute right-2 top-2 h-7 w-7 p-0"
-                            onClick={() => copyToClipboard(commands.cli, "cli")}
-                          >
-                            {copiedCommand === "cli" ? (
-                              <Check className="h-4 w-4 text-green-500" />
-                            ) : (
-                              <Copy className="h-4 w-4" />
-                            )}
-                          </Button>
+                    {installationSteps.cli.map((step, index) => (
+                      <li key={index} className="flex gap-4">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                          {index + 1}
                         </div>
-                      </div>
-                    </li>
+                        <div>
+                          <h4 className="font-medium">{step.title}</h4>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            {step.description}
+                          </p>
 
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        3
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Apply the Theme</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Restart VS Code if needed, then press{" "}
-                          <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+K
-                          </kbd>{" "}
-                          <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+T
-                          </kbd>{" "}
-                          and select V Theme
-                        </p>
-                      </div>
-                    </li>
+                          {step.title === "Run the Command" && (
+                            <div className="mt-2 relative">
+                              <div className="bg-muted p-3 rounded-md font-mono text-sm overflow-x-auto">
+                                {installationCommands.cli}
+                              </div>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="absolute right-2 top-2 h-7 w-7 p-0"
+                                onClick={() => copyToClipboard(installationCommands.cli, "cli")}
+                              >
+                                {copiedCommand === "cli" ? (
+                                  <Check className="h-4 w-4 text-green-500" />
+                                ) : (
+                                  <Copy className="h-4 w-4" />
+                                )}
+                              </Button>
+                            </div>
+                          )}
+
+                          {step.title === "Apply the Theme" && (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              Restart VS Code if needed, then press{" "}
+                              <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
+                                Ctrl+K
+                              </kbd>{" "}
+                              <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
+                                Ctrl+T
+                              </kbd>{" "}
+                              and select V Theme
+                            </p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
                   </ol>
 
                   <div className="mt-8">
                     <Button
                       className="flex items-center gap-2"
-                      onClick={() => copyToClipboard(commands.cli, "btn")}
+                      onClick={() => copyToClipboard(installationCommands.cli, "btn")}
                     >
                       {copiedCommand === "btn" ? (
                         <>
@@ -559,7 +512,7 @@ export function InstallationSection() {
                               <span className="text-sm opacity-70">&gt;</span>
                               <div className="flex-1 text-left">
                                 <span className="text-sm font-medium text-primary">
-                                  ext install nabinkhair.vtheme
+                                  {installationCommands.extension}
                                 </span>
                                 <span className="animate-pulse">▋</span>
                               </div>
@@ -589,98 +542,80 @@ export function InstallationSection() {
                   </h3>
 
                   <ol className="space-y-6">
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        1
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Open Command Palette</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Press{" "}
-                          <kbd className="px-2 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+P
-                          </kbd>{" "}
-                          (or{" "}
-                          <kbd className="px-2 py-0.5 rounded bg-muted text-xs">
-                            Cmd+P
-                          </kbd>{" "}
-                          on Mac)
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        2
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Type Extension Command</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Type{" "}
-                          <code className="text-primary font-mono">
-                            ext install nabinkhair.vtheme
-                          </code>
-                        </p>
-
-                        <div className="mt-2 relative">
-                          <div className="bg-muted p-3 rounded-md font-mono text-sm overflow-x-auto">
-                            {commands.extension}
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="absolute right-2 top-2 h-7 w-7 p-0"
-                            onClick={() =>
-                              copyToClipboard(commands.extension, "ext")
-                            }
-                          >
-                            {copiedCommand === "ext" ? (
-                              <Check className="h-4 w-4 text-green-500" />
-                            ) : (
-                              <Copy className="h-4 w-4" />
-                            )}
-                          </Button>
+                    {installationSteps.extension.map((step, index) => (
+                      <li key={index} className="flex gap-4">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                          {index + 1}
                         </div>
-                      </div>
-                    </li>
+                        <div>
+                          <h4 className="font-medium">{step.title}</h4>
+                          {step.title === "Open Command Palette" ? (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              Press{" "}
+                              <kbd className="px-2 py-0.5 rounded bg-muted text-xs">
+                                Ctrl+P
+                              </kbd>{" "}
+                              (or{" "}
+                              <kbd className="px-2 py-0.5 rounded bg-muted text-xs">
+                                Cmd+P
+                              </kbd>{" "}
+                              on Mac)
+                            </p>
+                          ) : step.title === "Type Extension Command" ? (
+                            <>
+                              <p className="text-sm text-muted-foreground mt-1">
+                                Type{" "}
+                                <code className="text-primary font-mono">
+                                  {installationCommands.extension}
+                                </code>
+                              </p>
 
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        3
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Press Enter</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Press Enter to install the extension
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                        4
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Apply the Theme</h4>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Press{" "}
-                          <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+K
-                          </kbd>{" "}
-                          <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
-                            Ctrl+T
-                          </kbd>{" "}
-                          and select V Theme
-                        </p>
-                      </div>
-                    </li>
+                              <div className="mt-2 relative">
+                                <div className="bg-muted p-3 rounded-md font-mono text-sm overflow-x-auto">
+                                  {installationCommands.extension}
+                                </div>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="absolute right-2 top-2 h-7 w-7 p-0"
+                                  onClick={() =>
+                                    copyToClipboard(installationCommands.extension, "ext")
+                                  }
+                                >
+                                  {copiedCommand === "ext" ? (
+                                    <Check className="h-4 w-4 text-green-500" />
+                                  ) : (
+                                    <Copy className="h-4 w-4" />
+                                  )}
+                                </Button>
+                              </div>
+                            </>
+                          ) : step.title === "Apply the Theme" ? (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              Press{" "}
+                              <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
+                                Ctrl+K
+                              </kbd>{" "}
+                              <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
+                                Ctrl+T
+                              </kbd>{" "}
+                              and select V Theme
+                            </p>
+                          ) : (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {step.description}
+                            </p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
                   </ol>
 
                   <div className="mt-8">
                     <Button
                       className="flex items-center gap-2"
                       onClick={() =>
-                        copyToClipboard(commands.extension, "extbtn")
+                        copyToClipboard(installationCommands.extension, "extbtn")
                       }
                     >
                       {copiedCommand === "extbtn" ? (
