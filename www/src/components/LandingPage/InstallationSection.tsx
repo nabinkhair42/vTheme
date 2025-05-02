@@ -151,7 +151,7 @@ export function InstallationSection() {
             variants={itemVariants}
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 tracking-tight"
           >
-            <span className="text-primary">V Theme</span> {sectionData.title}
+            Get <span className="text-primary">V Theme</span> in 60 Seconds
           </motion.h2>
 
           <motion.p

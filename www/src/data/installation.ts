@@ -130,7 +130,7 @@ export const marketplaceData = {
 
 // Section heading data
 export const sectionData = {
-  title: "Get V Theme in 60 Seconds",
+  title: "Get in 60 Seconds",
   subtitle:
     "Choose your preferred installation method and transform your coding environment",
   marketplaceUrl:
