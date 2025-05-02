@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Download,
-  Github,
   Moon,
   Sun,
   CheckCircle2,
@@ -20,6 +19,7 @@ import {
   Zap,
   Copy,
 } from "lucide-react";
+import { FaGithub } from "react-icons/fa6";
 
 export function HeroSection() {
   const { theme, setTheme } = useTheme();
@@ -149,7 +149,7 @@ export function HeroSection() {
           >
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               The{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-600 dark:from-primary dark:to-cyan-400 ">
                 Perfect
               </span>{" "}
               VS Code Theme for Developers
@@ -187,7 +187,7 @@ export function HeroSection() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
                 >
-                  <Github className="h-5 w-5" />
+                  <FaGithub  className="h-5 w-5" />
                   View on GitHub
                 </a>
               </Button>
