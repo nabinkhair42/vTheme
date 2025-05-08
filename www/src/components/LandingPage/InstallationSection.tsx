@@ -9,14 +9,12 @@ import {
   Check,
   ExternalLink,
   Keyboard,
-  Github,
   Code2,
   Sparkles,
   FileJson,
   Palette,
   Star,
   Package,
-  CircleCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
@@ -116,6 +114,8 @@ export function InstallationSection() {
         return <Terminal className="h-5 w-5" />;
       case "Code2":
         return <Code2 className="h-5 w-5" />;
+      case "Download":
+        return <Download className="h-5 w-5" />;
       default:
         return null;
     }
@@ -686,10 +686,11 @@ export function InstallationSection() {
                           <p>Last Updated: {vsixData.lastUpdated}</p>
                         </div>
                         
-                        <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2">
+                        <Button asChild >
                           <a href={vsixData.downloadPath} download>
                             <Download className="h-4 w-4" />
                             Download VSIX Package
+                            
                           </a>
                         </Button>
                       </div>
@@ -718,10 +719,10 @@ export function InstallationSection() {
 
                           {step.title === "Download VSIX File" && (
                             <div className="mt-3">
-                              <Button asChild size="sm" variant="outline" className="flex items-center gap-2">
+                              <Button asChild size="sm" className="py-6 flex items-center gap-2">
                                 <a href={vsixData.downloadPath} download>
                                   <Download className="h-3.5 w-3.5" />
-                                  Download vtheme-0.0.1.vsix
+                                  Download vtheme-{vsixData.version}.vsix
                                 </a>
                               </Button>
                             </div>

@@ -25,8 +25,8 @@ export function HeroSection() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [installCount, setInstallCount] = useState(3524);
-  const [rating, setRating] = useState(4.9);
+  const [installCount, setInstallCount] = useState(680);
+  const [rating, setRating] = useState(5);
   const [copySuccess, setCopySuccess] = useState(false);
 
   // Handle mounted state for hydration
@@ -138,7 +138,7 @@ export function HeroSection() {
               className="px-4 py-2 gap-2 text-sm font-medium border-primary/30 backdrop-blur-sm"
             >
               <Sparkles className="h-4 w-4 text-primary" />
-              <span>V Theme 1.0 — {new Date().getFullYear()}</span>
+              <span>V Theme 0.0.2 — {new Date().getFullYear()}</span>
             </Badge>
           </motion.div>
 
@@ -236,7 +236,7 @@ export function HeroSection() {
           >
             <div className="relative group">
               {/* Theme image preview */}
-              <div className="relative rounded-xl overflow-hidden border border-border/60 shadow-2xl">
+              <div className="relative rounded-xl overflow-hidden border border-border/60 shadow-2xl bg-background">
                 {/* Top editor bar */}
                 <div className="flex items-center px-4 py-2 bg-card/80 border-b border-border/60">
                   <div className="flex space-x-2 mr-3">
@@ -285,7 +285,7 @@ export function HeroSection() {
                 </div>
 
                 {/* Theme preview content */}
-                <div className="aspect-video transition-all rounded-xl">
+                <div className="relative w-full aspect-[16/9] rounded-b-xl overflow-hidden bg-background">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={isLightTheme ? "light" : "dark"}
@@ -293,20 +293,16 @@ export function HeroSection() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute inset-0 rounded-xl"
+                      className="absolute inset-0 flex items-center justify-center"
                     >
                       <Image
-                        src={
-                          isLightTheme
-                            ? "/preview-light.png"
-                            : "/preview-dark.png"
-                        }
-                        alt={`V Theme ${
-                          isLightTheme ? "Light" : "Dark"
-                        } Preview`}
+                        src={isLightTheme ? "/preview-light.png" : "/preview-dark.png"}
+                        alt={`V Theme ${isLightTheme ? "Light" : "Dark"} Preview`}
                         fill
-                        className="object-cover rounded-xl"
+                        className="object-cover object-center w-full h-full"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1400px"
                         priority
+                        quality={95}
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -351,33 +347,6 @@ export function HeroSection() {
                   </div>
                 </motion.div>
               </div>
-
-              {/* Theme toggle instruction */}
-              <motion.div
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{
-                  opacity: isHovered ? 1 : 0,
-                  scale: isHovered ? 1 : 0.8,
-                  transition: { duration: 0.2 },
-                }}
-              >
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  onClick={() => setTheme(isLightTheme ? "dark" : "light")}
-                >
-                  {isLightTheme ? (
-                    <>
-                      <Moon className="mr-2 h-4 w-4" /> Try Dark Mode
-                    </>
-                  ) : (
-                    <>
-                      <Sun className="mr-2 h-4 w-4" /> Try Light Mode
-                    </>
-                  )}
-                </Button>
-              </motion.div>
             </div>
           </motion.div>
 

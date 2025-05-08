@@ -526,7 +526,7 @@ export function ColorTheorySection() {
             </div>
 
             <div className="mt-8 text-center">
-              <Button className="gap-2">
+              <Button className="gap-2 py-6">
                 <a
                   href="https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme"
                   target="_blank"

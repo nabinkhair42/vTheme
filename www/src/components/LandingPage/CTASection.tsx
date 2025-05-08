@@ -159,12 +159,12 @@ export function CTASection() {
                   <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                   <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                   <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-                  <span className="text-xs font-medium ml-1">4.9/5</span>
+                  <span className="text-xs font-medium ml-1">5/5</span>
                 </div>
 
                 {/* Download count badge */}
                 <div className="absolute bottom-5 left-5 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-primary/30 shadow-lg">
-                  <span className="text-xs font-medium">3,500+ installs</span>
+                  <span className="text-xs font-medium">680+ installs</span>
                 </div>
               </div>
             </div>

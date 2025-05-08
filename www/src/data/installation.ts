@@ -28,7 +28,7 @@ export const installationTabs = [
 export const installationCommands = {
   cli: "code --install-extension nabinkhair.vtheme",
   extension: "ext install nabinkhair.vtheme",
-  vsix: "code --install-extension vtheme-0.0.1.vsix"
+  vsix: "code --install-extension vtheme-0.0.2.vsix"
 };
 
 // Installation steps for each method
@@ -111,11 +111,11 @@ export const installationSteps = {
 
 // VSIX file data
 export const vsixData = {
-  fileName: "vtheme-0.0.1.vsix",
+  fileName: "vtheme-0.0.2.vsix",
   fileSize: "154 KB",
-  version: "0.0.1",
-  downloadPath: "/vtheme-0.0.1.vsix",
-  lastUpdated: "May 2025",
+  version: "0.0.2",
+  downloadPath: "/vtheme-0.0.2.vsix",
+  lastUpdated: "08, May 2025",
 };
 
 // Marketplace mock data
@@ -124,7 +124,7 @@ export const marketplaceData = {
   description: "A professionally crafted VS Code theme",
   ratings: 5,
   ratingCount: 42,
-  installs: "3.5K+",
+  installs: "0.6k+",
   updated: "April 2025",
 };
 

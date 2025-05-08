@@ -59,6 +59,7 @@
 		// Input controls - clean and minimal
 		"input.background": "#FFFFFF",
 		"input.foreground": "#2D3748",
+		"input.border": "#E5E9F0",
 		"input.placeholderForeground": "#718096",
 		"inputOption.activeBorder": "#00A3A3",
 		
