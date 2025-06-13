@@ -111,10 +111,10 @@ export const installationSteps = {
 
 // VSIX file data
 export const vsixData = {
-  fileName: "vtheme-0.0.2.vsix",
+  fileName: "vtheme-0.0.3.vsix",
   fileSize: "154 KB",
   version: "0.0.2",
-  downloadPath: "/vtheme-0.0.2.vsix",
+  downloadPath: "/vtheme-0.0.3.vsix",
   lastUpdated: "08, May 2025",
 };
 
