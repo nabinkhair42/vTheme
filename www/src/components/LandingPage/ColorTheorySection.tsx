@@ -528,7 +528,7 @@ export function ColorTheorySection() {
             <div className="mt-8 text-center">
               <Button className="gap-2 py-6">
                 <a
-                  href="https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme"
+                  href="https://marketplace.visualstudio.com/items?itemName=UncleSamsTech.vtheme"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"

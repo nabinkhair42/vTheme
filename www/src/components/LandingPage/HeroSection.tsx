@@ -1,24 +1,24 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useTheme } from "next-themes";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
 import {
-  Download,
-  Moon,
-  Sun,
   CheckCircle2,
   Code2,
-  Sparkles,
+  Copy,
+  Download,
   Eye,
+  Moon,
+  Sparkles,
   Star,
+  Sun,
   Terminal,
   Zap,
-  Copy,
 } from "lucide-react";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 
 export function HeroSection() {
@@ -33,7 +33,7 @@ export function HeroSection() {
   useEffect(() => setMounted(true), []);
 
   const handleCopyCommand = () => {
-    navigator.clipboard.writeText("code --install-extension nabinkhair.vtheme");
+    navigator.clipboard.writeText("code --install-extension UncleSamsTech.vtheme");
     setCopySuccess(true);
     setTimeout(() => setCopySuccess(false), 2000);
   };
@@ -138,7 +138,7 @@ export function HeroSection() {
               className="px-4 py-2 gap-2 text-sm font-medium border-primary/30 backdrop-blur-sm"
             >
               <Sparkles className="h-4 w-4 text-primary" />
-              <span>V Theme 0.0.2 — {new Date().getFullYear()}</span>
+              <span>V Theme 0.0.3 — {new Date().getFullYear()}</span>
             </Badge>
           </motion.div>
 
@@ -169,7 +169,7 @@ export function HeroSection() {
                 <Download className="h-5 w-5" />
                 Install V Theme
                 <a
-                  href="https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme"
+                  href="https://marketplace.visualstudio.com/items?itemName=UncleSamsTech.vtheme"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="absolute inset-0"
@@ -208,7 +208,7 @@ export function HeroSection() {
               </div>
               <div className="px-4 py-3 flex items-center justify-between">
                 <code className="font-mono text-sm">
-                  code --install-extension nabinkhair.vtheme
+                  code --install-extension UncleSamsTech.vtheme
                 </code>
                 <div
                   className="tooltip"

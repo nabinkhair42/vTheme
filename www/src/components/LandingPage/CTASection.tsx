@@ -208,7 +208,7 @@ export function CTASection() {
               <a
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                   "Just discovered V Theme for VS Code - a professionally crafted theme based on color theory principles that reduces eye strain. Check it out!"
-                )}%20https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme`}
+                )}%20https://marketplace.visualstudio.com/items?itemName=UncleSamsTech.vtheme`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"
@@ -221,7 +221,7 @@ export function CTASection() {
             <Button variant="secondary">
               <a
                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-                  "https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme"
+                  "https://marketplace.visualstudio.com/items?itemName=UncleSamsTech.vtheme"
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

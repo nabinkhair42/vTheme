@@ -26,9 +26,9 @@ export const installationTabs = [
 
 // Installation commands
 export const installationCommands = {
-  cli: "code --install-extension nabinkhair.vtheme",
-  extension: "ext install nabinkhair.vtheme",
-  vsix: "code --install-extension vtheme-0.0.2.vsix"
+  cli: "code --install-extension UncleSamsTech.vtheme",
+  extension: "ext install UncleSamsTech.vtheme",
+  vsix: "code --install-extension UncleSamsTech-0.0.3.vsix"
 };
 
 // Installation steps for each method
@@ -74,7 +74,7 @@ export const installationSteps = {
     },
     {
       title: "Type Extension Command",
-      description: "Type ext install nabinkhair.vtheme",
+      description: "Type ext install UncleSamsTech.vtheme",
     },
     {
       title: "Press Enter",
@@ -134,5 +134,5 @@ export const sectionData = {
   subtitle:
     "Choose your preferred installation method and transform your coding environment",
   marketplaceUrl:
-    "https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme",
+    "https://marketplace.visualstudio.com/items?itemName=UncleSamsTech.vtheme",
 };
