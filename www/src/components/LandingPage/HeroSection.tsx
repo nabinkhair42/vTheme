@@ -25,15 +25,13 @@ export function HeroSection() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [installCount, setInstallCount] = useState(680);
-  const [rating, setRating] = useState(5);
   const [copySuccess, setCopySuccess] = useState(false);
 
   // Handle mounted state for hydration
   useEffect(() => setMounted(true), []);
 
   const handleCopyCommand = () => {
-    navigator.clipboard.writeText("code --install-extension UncleSamsTech.vtheme");
+    navigator.clipboard.writeText("code --install-extension nabinkhair.vtheme");
     setCopySuccess(true);
     setTimeout(() => setCopySuccess(false), 2000);
   };
@@ -93,8 +91,8 @@ export function HeroSection() {
     <section className="w-full py-20 md:py-24 lg:py-32 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-        <div className="absolute bottom-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+        <div className="absolute top-0 w-full h-px from-transparent via-primary/30 to-transparent"></div>
+        <div className="absolute bottom-0 w-full h-px from-transparent via-primary/30 to-transparent"></div>
 
         <div className="absolute top-1/3 -left-1/3 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] opacity-60"></div>
         <div className="absolute -bottom-1/3 -right-1/3 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px] opacity-60"></div>
@@ -149,7 +147,7 @@ export function HeroSection() {
           >
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               The{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-600 dark:from-primary dark:to-cyan-400 ">
+              <span className="text-transparent bg-linear-to-br bg-clip-text from-primary to-teal-600 dark:from-primary dark:to-cyan-400 ">
                 Perfect
               </span>{" "}
               VS Code Theme for Developers
@@ -169,7 +167,7 @@ export function HeroSection() {
                 <Download className="h-5 w-5" />
                 Install V Theme
                 <a
-                  href="https://marketplace.visualstudio.com/items?itemName=UncleSamsTech.vtheme"
+                  href="https://marketplace.visualstudio.com/items?itemName=nabinkhair.vtheme"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="absolute inset-0"
@@ -208,7 +206,7 @@ export function HeroSection() {
               </div>
               <div className="px-4 py-3 flex items-center justify-between">
                 <code className="font-mono text-sm">
-                  code --install-extension UncleSamsTech.vtheme
+                  code --install-extension nabinkhair.vtheme
                 </code>
                 <div
                   className="tooltip"
@@ -285,7 +283,7 @@ export function HeroSection() {
                 </div>
 
                 {/* Theme preview content */}
-                <div className="relative w-full aspect-[16/9] rounded-b-xl overflow-hidden bg-background">
+                <div className="relative w-full aspect-video rounded-b-xl overflow-hidden bg-background">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={isLightTheme ? "light" : "dark"}
@@ -328,7 +326,7 @@ export function HeroSection() {
                       className="h-3.5 w-3.5 text-yellow-500"
                     />
                     <span className="text-xs font-medium">
-                      {rating}/5 rating
+                      4/5 rating
                     </span>
                   </div>
                 </motion.div>
@@ -342,7 +340,7 @@ export function HeroSection() {
                   <div className="flex items-center gap-1.5">
                     <Download className="h-3.5 w-3.5 text-primary" />
                     <span className="text-xs font-medium">
-                      {installCount.toLocaleString()}+ installs
+                      1.3k+ installs
                     </span>
                   </div>
                 </motion.div>
@@ -389,8 +387,8 @@ export function HeroSection() {
                 className="relative group p-5 rounded-2xl border border-border/60 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-colors"
                 variants={itemVariants}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-400/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
-                <div className="relative z-10">
+                <div className="absolute inset-0 from-primary/5 to-blue-400/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
+                <div className="relative z-10 flex flex-col items-start text-start">
                   <div className="flex items-center justify-center w-10 h-10 mb-3 rounded-lg bg-primary/10 text-primary">
                     {feature.icon}
                   </div>

@@ -141,7 +141,7 @@ export function InstallationSection() {
         >
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20"
           >
             <Download className="h-4 w-4" />
             <span>Installation</span>
@@ -166,7 +166,7 @@ export function InstallationSection() {
             variants={itemVariants}
             className="relative w-full max-w-3xl mb-12"
           >
-            <div className="absolute h-[1px] bottom-0 left-0 right-0 bg-border"></div>
+            <div className="absolute h-px bottom-0 left-0 right-0 bg-border"></div>
 
             <div className="flex flex-wrap justify-center sm:justify-around">
               {installationTabs.map((tab) => (
@@ -195,7 +195,7 @@ export function InstallationSection() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
                 {/* Left side - Mockup */}
                 <div className="lg:col-span-3 order-2 lg:order-1">
                   <div className="rounded-lg border border-border overflow-hidden shadow-xl">
@@ -278,7 +278,7 @@ export function InstallationSection() {
                   <ol className="space-y-6">
                     {installationSteps.marketplace.map((step, index) => (
                       <li key={index} className="flex gap-4">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                        <div className="shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
                           {index + 1}
                         </div>
                         <div>
@@ -338,7 +338,7 @@ export function InstallationSection() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
                 {/* Left side - Terminal */}
                 <div className="lg:col-span-3 order-2 lg:order-1">
                   <div className="rounded-lg border border-border overflow-hidden shadow-xl">
@@ -379,7 +379,7 @@ export function InstallationSection() {
                   <ol className="space-y-6">
                     {installationSteps.cli.map((step, index) => (
                       <li key={index} className="flex gap-4">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                        <div className="shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
                           {index + 1}
                         </div>
                         <div>
@@ -457,7 +457,7 @@ export function InstallationSection() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
                 {/* Left side - VS Code UI */}
                 <div className="lg:col-span-3 order-2 lg:order-1">
                   <div className="rounded-lg border border-border overflow-hidden shadow-xl">
@@ -497,7 +497,7 @@ export function InstallationSection() {
 
                       {/* Main content - Command palette */}
                       <div className="flex-1 flex flex-col">
-                        <div className="p-4 text-center">
+                        <div className="p-4">
                           <p className="text-sm opacity-70 mb-4">
                             Press{" "}
                             <kbd className="px-1.5 py-0.5 rounded bg-muted text-xs">
@@ -547,7 +547,7 @@ export function InstallationSection() {
                   <ol className="space-y-6">
                     {installationSteps.extension.map((step, index) => (
                       <li key={index} className="flex gap-4">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                        <div className="shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
                           {index + 1}
                         </div>
                         <div>
@@ -648,7 +648,7 @@ export function InstallationSection() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
                 {/* Left side - VSIX file details */}
                 <div className="lg:col-span-3 order-2 lg:order-1">
                   <div className="rounded-lg border border-border overflow-hidden shadow-xl">
@@ -672,25 +672,25 @@ export function InstallationSection() {
                     <div
                       className={`${
                         theme === "light" ? "bg-[#f9f9f9]" : "bg-[#1e1e1e]"
-                      } p-8 flex flex-col items-center justify-center h-80`}
+                      } p-8 flex flex-col items-center`}
                     >
                       <div className="mb-6">
                         <Package className="h-20 w-20 text-primary/60" />
                       </div>
-                      
-                      <div className="text-center">
+
+                      <div>
                         <h3 className="text-xl font-medium mb-2">{vsixData.fileName}</h3>
                         <div className="mb-4 flex flex-col gap-1 text-sm text-muted-foreground">
                           <p>Size: {vsixData.fileSize}</p>
                           <p>Version: {vsixData.version}</p>
                           <p>Last Updated: {vsixData.lastUpdated}</p>
                         </div>
-                        
+
                         <Button asChild >
                           <a href={vsixData.downloadPath} download>
                             <Download className="h-4 w-4" />
                             Download VSIX Package
-                            
+
                           </a>
                         </Button>
                       </div>
@@ -708,7 +708,7 @@ export function InstallationSection() {
                   <ol className="space-y-6">
                     {installationSteps.vsix.map((step, index) => (
                       <li key={index} className="flex gap-4">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                        <div className="shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
                           {index + 1}
                         </div>
                         <div>

@@ -21,10 +21,10 @@ import { darkThemeColors, lightThemeColors } from "@/data/colorPaletteData";
 import { colorTheoryPrinciplesData, IconName } from "@/data/colorTheory";
 import { pageAnimations } from "@/lib/animations";
 import { getThemeColors, getColorValue, processExampleTemplate } from "@/lib/colorUtils";
-import { 
-  getColorTheoryIllustration, 
-  AnalogousColorHarmony, 
-  ContrastReadability 
+import {
+  getColorTheoryIllustration,
+  AnalogousColorHarmony,
+  ContrastReadability
 } from "./ColorTheoryIllustrations";
 
 // Map icon names to actual components
@@ -45,7 +45,7 @@ export function ColorTheorySection() {
   // Get theme colors using our utility function
   const colorData = currentTheme === "light" ? lightThemeColors : darkThemeColors;
   const themeColors = getThemeColors(currentTheme, colorData);
-  
+
   // Destructure colors for easier access
   const { bgColor, primaryColor, secondaryColor, textColor, syntax } = themeColors;
 
@@ -82,15 +82,15 @@ export function ColorTheorySection() {
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--primary-rgb),0.08),transparent_80%)]"></div>
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/30 to-transparent"></div>
       </div>
       <div className="container px-4 sm:px-8 mx-auto max-w-7xl">
         <motion.div
           className="flex flex-col items-center mb-16"
           {...pageAnimations.fadeInUp}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-2 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb -6 border border-primary/20">
             <Sparkles className="h-4 w-4" />
             <span>Scientific Design</span>
           </div>
@@ -206,7 +206,7 @@ export function ColorTheorySection() {
               ))}
             </motion.div>
           </div>
-          
+
           {/* Right side - Visual demonstration */}
           <motion.div
             className="lg:col-span-3"
@@ -523,20 +523,6 @@ export function ColorTheorySection() {
                   </div>
                 </TabsContent>
               </Tabs>
-            </div>
-
-            <div className="mt-8 text-center">
-              <Button className="gap-2 py-6">
-                <a
-                  href="https://marketplace.visualstudio.com/items?itemName=UncleSamsTech.vtheme"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  <Palette className="h-4 w-4" />
-                  Try V Theme's Color Harmony
-                </a>
-              </Button>
             </div>
           </motion.div>
         </div>

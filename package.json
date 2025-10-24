@@ -3,9 +3,9 @@
   "displayName": "V Theme",
   "description": "A professionally crafted theme with both dark and light variants based on color theory principles",
   "version": "0.0.3",
-  "publisher": "UncleSamsTech",
+  "publisher": "Nabin Khair",
   "author": {
-    "name": "UncleSamsTech"
+    "name": "Nabin Khair"
   },
   "engines": {
     "vscode": "^1.50.0"

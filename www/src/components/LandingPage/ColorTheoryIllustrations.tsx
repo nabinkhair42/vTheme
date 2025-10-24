@@ -7,12 +7,12 @@ interface IllustrationProps {
 
 export function AnalogousWheel({ themeColors }: IllustrationProps) {
   const { bgColor, primaryColor, secondaryColor } = themeColors;
-  
+
   return (
     <div className="relative w-24 h-24 mx-auto my-4">
       <div className="absolute inset-0 rounded-full border border-border flex items-center justify-center overflow-hidden">
         <div
-          className="absolute w-full h-full bg-gradient-to-r from-[var(--bg-color)] via-[var(--primary-color)] to-[var(--secondary-color)] opacity-70"
+          className="absolute w-full h-full bg-linear-to-r from-(--bg-color) via-(--primary-color) to-(--secondary-color) opacity-70"
           style={
             {
               "--bg-color": bgColor,
@@ -31,16 +31,16 @@ export function AnalogousWheel({ themeColors }: IllustrationProps) {
 
 export function HSVModel({ themeColors }: IllustrationProps) {
   const { primaryColor } = themeColors;
-  
+
   return (
     <div className="grid grid-cols-3 gap-2 my-4">
       <div className="flex flex-col items-center">
-        <div className="w-full h-8 rounded bg-gradient-to-r from-[#FF0000] via-[#00FF00] to-[#0000FF]"></div>
+        <div className="w-full h-8 rounded bg-linear-to-r from-[#FF0000] via-[#00FF00] to-[#0000FF]"></div>
         <span className="text-xs mt-1">Hue</span>
       </div>
       <div className="flex flex-col items-center">
         <div
-          className="w-full h-8 rounded bg-gradient-to-r"
+          className="w-full h-8 rounded bg-linear-to-r"
           style={{
             backgroundImage: `linear-gradient(to right, ${primaryColor}20, ${primaryColor})`,
           }}
@@ -48,7 +48,7 @@ export function HSVModel({ themeColors }: IllustrationProps) {
         <span className="text-xs mt-1">Saturation</span>
       </div>
       <div className="flex flex-col items-center">
-        <div className="w-full h-8 rounded bg-gradient-to-r from-[#000000] to-[#FFFFFF]"></div>
+        <div className="w-full h-8 rounded bg-linear-to-r from-[#000000] to-[#FFFFFF]"></div>
         <span className="text-xs mt-1">Value</span>
       </div>
     </div>
@@ -57,7 +57,7 @@ export function HSVModel({ themeColors }: IllustrationProps) {
 
 export function CoolColors({ themeColors }: IllustrationProps) {
   const { bgColor, primaryColor, secondaryColor } = themeColors;
-  
+
   return (
     <div className="flex justify-center gap-2 my-4">
       <div
@@ -78,7 +78,7 @@ export function CoolColors({ themeColors }: IllustrationProps) {
 
 export function ContrastDemo({ themeColors }: IllustrationProps) {
   const { bgColor, textColor, primaryColor } = themeColors;
-  
+
   return (
     <div
       className="my-4 p-3 rounded"
@@ -104,7 +104,7 @@ export function ContrastDemo({ themeColors }: IllustrationProps) {
 
 export function HierarchyDemo({ themeColors }: IllustrationProps) {
   const { bgColor, textColor, syntax } = themeColors;
-  
+
   return (
     <div
       className="my-4 p-3 rounded"
@@ -130,7 +130,7 @@ export function HierarchyDemo({ themeColors }: IllustrationProps) {
 
 export function MinimalPalette({ themeColors }: IllustrationProps) {
   const { syntax } = themeColors;
-  
+
   return (
     <div className="flex flex-wrap justify-center gap-1 my-4">
       <div
@@ -159,7 +159,7 @@ export function MinimalPalette({ themeColors }: IllustrationProps) {
 
 export function AnalogousColorHarmony({ themeColors }: IllustrationProps) {
   const { bgColor, primaryColor, secondaryColor } = themeColors;
-  
+
   return (
     <div
       className="p-4 rounded-lg"
@@ -171,7 +171,7 @@ export function AnalogousColorHarmony({ themeColors }: IllustrationProps) {
           style={{ backgroundColor: bgColor }}
         ></div>
         <ChevronRight
-          className="text-[var(--primary-color)]"
+          className="text-(--primary-color)"
           style={{ "--primary-color": primaryColor } as any}
         />
         <div
@@ -179,7 +179,7 @@ export function AnalogousColorHarmony({ themeColors }: IllustrationProps) {
           style={{ backgroundColor: primaryColor }}
         ></div>
         <ChevronRight
-          className="text-[var(--secondary-color)]"
+          className="text-(--secondary-color)"
           style={{ "--secondary-color": secondaryColor } as any}
         />
         <div
@@ -193,7 +193,7 @@ export function AnalogousColorHarmony({ themeColors }: IllustrationProps) {
 
 export function ContrastReadability({ themeColors }: IllustrationProps) {
   const { bgColor, primaryColor, textColor, syntax } = themeColors;
-  
+
   return (
     <div
       className="p-4 rounded-lg"
